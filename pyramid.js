@@ -161,7 +161,7 @@ $(function() {
              return false;
          });
 
-        var p1= generatePath(paper,dat[currentYear]['M'],dat['currentYear]['F']);
+        var p1= generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
         var c = paper.path(p1);
         c.attr({stroke:'#fff','stroke-width' :2,'stroke-linecap':'round',fill:'#fff','fill-opacity':'0.8'});
         $(".alpha_link").click(function()
