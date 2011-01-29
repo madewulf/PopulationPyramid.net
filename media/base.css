@@ -1,0 +1,70 @@
+body {
+    font-family: 'Nobile', Arial, sans-serif;
+    line-height:1.2em;
+    font-size:15px;
+
+    background-image: url(texture_tile.jpg); background-repeat: repeat;
+
+}
+h1{
+    font-family: 'Nobile', Arial, Verdana,sans-serif;
+    line-height:1em;
+    font-size:18px;
+    color:lightgray;
+    text-align:right;
+    margin-top:-7px;
+}
+h2{
+    font-family: 'Nobile', Arial, Verdana,sans-serif;
+    line-height:1em;
+    font-size:30px;
+    font-weight:bold;
+    margin-left:30px;
+
+}
+#title2 {
+    margin-top:-45px;
+    margin-bottom:-10px;
+}
+#canvas_container {
+    width: 500px;
+    border: 2px solid #aaa;
+    padding:20px;
+    margin:10px;
+    border-radius: 15px;
+    -moz-border-radius:15px;
+
+}
+#about {
+    margin-left:30px;
+}
+
+#url_div{
+  margin-bottom:5px;
+  margin-left:40px;
+}
+a {
+    text-decoration:none;
+    color:#3600FF;
+}
+a:hover {
+    text-decoration:none;
+    color:#D900FF;
+    background-color:white;
+}
+#tot_pop{
+    float:right;
+}
+ul {
+    list-style-type :none;
+}
+#year_list li, #country_list li
+{
+    display:block;
+
+}
+#alpha_list li
+{
+    display:block;
+    text-align:center;
+}

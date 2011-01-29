@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+    <head>
+        <title>Population Pyramid</title>
+        <meta charset="utf-8" />
+        <META name="description" content="Visualization of the population pyramids of the world, based on the United Nations data."/>
+        <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
+        <link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold,italic,bolditalic' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="tot_pop.json"></script>
+        <script type="text/javascript" src="raphael.js"></script>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="pyramid.js"></script>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" type="text/css" href="media/base.css" />
+        <link rel="stylesheet" type="text/css" href="media/960.css" />
+    </head>
+    <body>
+        <div id="header" class="container_12">
+            <div id="empty_div" class="grid_9 ">
+                <h2>
+                 <span id="currentCountry"></span> <br/>
+                </h2>
+            </div>
+            <div id="title" class="grid_3 ">
+                <h1><span>Population</span><span>Pyramid</span><span>.net</span></h1>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="header2" class="container_12">
+            <div id="title2" class="grid_7">
+                <h2>
+                    <div id="tot_pop"></div>
+                    <span id="currentYear">2010</span> <br/>
+            </h2>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div id="content" class="container_12">
+            <div id="canvas_container_div" class="grid_7 " >
+                <div id="canvas_container" ></div>
+            </div>
+
+            <div id="year_list_div" class="grid_1 " style="display: table-cell; vertical-align: middle;">
+                <ul id="year_list">
+                </ul>
+            </div>
+
+            <div id="alpha_list_div" class="grid_1 ">
+                <div style="margin-left:11px;">
+                <ul id="alpha_list">
+                </ul>
+                </div>
+            </div>
+
+            <div id="country_list_div" class="grid_3 ">
+                <ul id="country_list">
+
+                </ul>
+            </div>
+        </div>
+        <div id="link" class="container_12">
+               <div id="url_div" class="grid_12">
+                    Link: <a href="" id="page_url"><span id="url"></a>
+
+                    </span>
+                </div>
+        </div>
+        <div id="footer" class="container_12">
+        <div id="about_div" class="grid_7 ">
+        <div id="about">
+
+        <p><strong>Source:</strong></p>
+        <p><em>Population Division of the Department of Economic and Social Affairs of the United Nations Secretariat, World Population Prospects: The 2008 Revision</em>
+        </p>
+        <p><a href="http://esa.un.org/unpp">http://esa.un.org/unpp</a> (Medium Variant)</p>
+        <p>Data downloaded on Saturday, December 04, 2010 at 7:16:51 PM.</p>
+        </div>
+
+        </div>
+
+        <div id="tech_div" class="grid_1 ">
+            <p></p>
+        </div>
+        <div id="tech_div" class="grid_4 ">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style ">
+            <a class="addthis_button_preferred_1"></a>
+            <a class="addthis_button_preferred_2"></a>
+            <a class="addthis_button_preferred_3"></a>
+            <a class="addthis_button_preferred_4"></a>
+            <a class="addthis_button_compact"></a>
+            </div>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d43455c4d3b61a7"></script>
+            <!-- AddThis Button END -->
+
+            <p>Visualization by <a href="http://multitasked.net">Martin De Wulf</a>.</p>
+            <p>Twitter: <a href="http://twitter.com/madewulf">@madewulf</a></p>
+
+           <p>Made using <a href="http://raphaeljs.com/">Raphaël</a>, <a href="http://jquery.com">JQuery</a> and
+               <a href="http://python.org/">Python</a> </p>
+          <p>
+           <p>All code on <a href="https://github.com/madewulf/populationpyramid">github.com</a></p>
+        </div>
+
+        </div>
+
+        <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+        try {
+        var pageTracker = _gat._getTracker("UA-1397562-7");
+        pageTracker._trackPageview();
+        } catch(err) {}
+        </script>
+    </body>
+    </html>
