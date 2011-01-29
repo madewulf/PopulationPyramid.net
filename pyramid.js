@@ -68,7 +68,6 @@ function changeUrl()
 {
     var url = "http://populationpyramid.net/?country="+currentCountry+"&year="+currentYear;
     var pop=tot_pop[currentCountry][currentYear]*1000+"";
-    alert(pop);
     var string_pop="";
     var l=pop.length;
     var i;
@@ -82,7 +81,7 @@ function changeUrl()
         {
             string_pop+=".";
         }
-        string_pop+=pop[i];
+        string_pop+=pop.charat(i);
 
     }
     $('#tot_pop').text(string_pop);
