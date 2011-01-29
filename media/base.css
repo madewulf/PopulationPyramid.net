@@ -12,7 +12,7 @@ h1{
     font-size:18px;
     color:lightgray;
     text-align:right;
-    padding-top:-7px;
+    margin-top:-7px;
 }
 h2{
     font-family: 'Nobile', Arial, Verdana,sans-serif;
@@ -23,20 +23,20 @@ h2{
 
 }
 #title2 {
-    padding-top:-45px;
-    padding-bottom:-10px;
+    margin-top:-45px;
+    margin-bottom:-10px;
 }
 #canvas_container {
     width: 500px;
     border: 2px solid #aaa;
     padding:20px;
-    padding:10px;
+    margin:10px;
     border-radius: 15px;
     -moz-border-radius:15px;
 
 }
 #about {
-    padding-left:30px;
+    margin-left:30px;
 }
 
 #url_div{
