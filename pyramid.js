@@ -81,7 +81,7 @@ function changeUrl()
         {
             string_pop+=".";
         }
-        string_pop+=pop.charat(i);
+        string_pop+=pop.charAt(i);
 
     }
     $('#tot_pop').text(string_pop);
