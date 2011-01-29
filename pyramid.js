@@ -67,7 +67,7 @@ function changeUrl()
     var url = "http://populationpyramid.net/?country="+currentCountry+"&year="+currentYear;
     $('#url').text(url);
     $('#page_url').attr("href",url);
-
+    $('#currentYear').text(currentYear);
     var pop=tot_pop[currentCountry][currentYear]*1000+"";
     var string_pop="";
     var l=pop.length;
