@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50ac2263-fc3a-4236-8818-a31df9b65521" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid.js" afterPath="$PROJECT_DIR$/pyramid.js" />
     </list>
     <ignored path="populationpyramid.iws" />
@@ -26,19 +25,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="131" selection-start="458" selection-end="458" vertical-scroll-proportion="0.121416524">
+            <state line="18" column="0" selection-start="1023" selection-end="1023" vertical-scroll-proportion="-4.5957446">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pyramid.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pyramid.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyramid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="89702" selection-end="89702" vertical-scroll-proportion="-4.230769">
+            <state line="70" column="10" selection-start="91088" selection-end="91088" vertical-scroll-proportion="0.26872963">
               <folding />
             </state>
           </provider>
@@ -67,8 +66,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/pyramid.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/pyramid.js" />
       </list>
     </option>
   </component>
@@ -211,16 +210,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyramid.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="89702" selection-end="89702" vertical-scroll-proportion="-4.230769">
+        <state line="18" column="0" selection-start="1023" selection-end="1023" vertical-scroll-proportion="-4.5957446">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/pyramid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="131" selection-start="458" selection-end="458" vertical-scroll-proportion="0.121416524">
+        <state line="70" column="10" selection-start="91088" selection-end="91088" vertical-scroll-proportion="0.26872963">
           <folding />
         </state>
       </provider>

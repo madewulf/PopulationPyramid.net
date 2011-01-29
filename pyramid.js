@@ -68,6 +68,7 @@ function changeUrl()
 {
     var url = "http://populationpyramid.net/?country="+currentCountry+"&year="+currentYear;
     var pop=tot_pop[currentCountry][currentYear]*1000+"";
+    alert(pop);
     var string_pop="";
     var l=pop.length;
     var i;
