@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50ac2263-fc3a-4236-8818-a31df9b65521" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid.js" afterPath="$PROJECT_DIR$/pyramid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="populationpyramid.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,19 +25,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="121" selection-start="4333" selection-end="4333" vertical-scroll-proportion="-16.904762">
+            <state line="26" column="17" selection-start="1475" selection-end="1475" vertical-scroll-proportion="-0.9386107">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pyramid.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pyramid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyramid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="24" selection-start="10056" selection-end="10056" vertical-scroll-proportion="0.6286645">
+            <state line="92" column="24" selection-start="10056" selection-end="10056" vertical-scroll-proportion="-14.846154">
               <folding />
             </state>
           </provider>
@@ -57,8 +57,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/pyramid.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -194,16 +194,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/pyramid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="121" selection-start="4333" selection-end="4333" vertical-scroll-proportion="-16.904762">
+        <state line="92" column="24" selection-start="10056" selection-end="10056" vertical-scroll-proportion="-14.846154">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyramid.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="24" selection-start="10056" selection-end="10056" vertical-scroll-proportion="0.6286645">
+        <state line="26" column="17" selection-start="1475" selection-end="1475" vertical-scroll-proportion="-0.9386107">
           <folding />
         </state>
       </provider>
