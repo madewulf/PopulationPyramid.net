@@ -10,9 +10,10 @@ h1{
     font-family: 'Nobile', Arial, Verdana,sans-serif;
     line-height:1em;
     font-size:18px;
-    color:lightgray;
+    color:#ccc;
     text-align:right;
     margin-top:-7px;
+    !margin-top:0px;
 }
 h2{
     font-family: 'Nobile', Arial, Verdana,sans-serif;
@@ -22,7 +23,11 @@ h2{
     margin-left:30px;
 
 }
+#current_country_div{
+    margin-top:-10px;
+}
 #title2 {
+    !padding-top:30px;
     margin-top:-45px;
     margin-bottom:-10px;
 }
