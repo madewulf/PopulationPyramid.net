@@ -12,7 +12,7 @@ h1{
     font-size:16px;
 
     text-align:right;
-    margin-top:-7px;
+    margin-top:0px;
     !margin-top:0px;
 }
 h3{
@@ -37,7 +37,7 @@ h2{
 }
 #title2 {
     !padding-top:30px;
-    margin-top:-55px;
+    margin-top:-50px;
     margin-bottom:-10px;
 }
 #canvas_container {
@@ -89,4 +89,7 @@ ul {
     font-size:0.8em;
     display:block;
     margin:0;
+    !padding-top:30px;
+    margin-top:-20px;
+    margin-bottom:-10px;
 }
