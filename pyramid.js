@@ -187,7 +187,7 @@ $(function() {
                 $("#country_list").empty();
                 $("#country_list").height(0);
                 $(".country_link").remove();
-                $("#content").append('<div id="country_list_div" class="grid_3 "><ul id="country_list"></ul></div>');
+
                 var country_list= country_dict[letter];
                 var country_count = country_list.length;
                 for (i=0;i<country_count;i++)

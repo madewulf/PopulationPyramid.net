@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="50ac2263-fc3a-4236-8818-a31df9b65521" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/base.css" afterPath="$PROJECT_DIR$/media/base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pyramid.js" afterPath="$PROJECT_DIR$/pyramid.js" />
     </list>
     <ignored path="populationpyramid.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,19 +26,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="0" selection-start="2371" selection-end="2391" vertical-scroll-proportion="-9.804348">
+            <state line="70" column="28" selection-start="3049" selection-end="3056" vertical-scroll-proportion="0.3322091">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="base.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/media/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="16" selection-start="269" selection-end="269" vertical-scroll-proportion="0.21052632">
+            <state line="11" column="16" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -48,7 +47,7 @@
       <file leaf-file-name="pyramid.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyramid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="320" selection-start="876" selection-end="876" vertical-scroll-proportion="-3.6923077">
+            <state line="189" column="0" selection-start="95288" selection-end="95288" vertical-scroll-proportion="-12.076923">
               <folding />
             </state>
           </provider>
@@ -77,9 +76,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/pyramid.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/media/base.css" />
+        <option value="$PROJECT_DIR$/pyramid.js" />
       </list>
     </option>
   </component>
@@ -110,6 +109,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -128,23 +128,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="populationpyramid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyramid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -230,6 +215,13 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/media/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="16" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tot_pop.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="0" selection-start="0" selection-end="81576" vertical-scroll-proportion="0.0" />
@@ -237,21 +229,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pyramid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="320" selection-start="876" selection-end="876" vertical-scroll-proportion="-3.6923077">
+        <state line="189" column="0" selection-start="95288" selection-end="95288" vertical-scroll-proportion="-12.076923">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="2371" selection-end="2391" vertical-scroll-proportion="-9.804348">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/media/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="16" selection-start="269" selection-end="269" vertical-scroll-proportion="0.21052632">
+        <state line="70" column="28" selection-start="3049" selection-end="3056" vertical-scroll-proportion="0.3322091">
           <folding />
         </state>
       </provider>
