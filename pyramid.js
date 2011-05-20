@@ -72,6 +72,7 @@ function changeUrl()
     var l=pop.length;
     var i;
     $('#url').text(url);
+
     $('#page_url').attr("href",url);
     $('#currentYear').text(currentYear);
 
@@ -177,9 +178,9 @@ $(function() {
         var p1= generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
         c = paper.path(p1);
         c.attr({stroke:'#fff','stroke-width' :2,'stroke-linecap':'round',fill:'#fff','fill-opacity':'0.8'});
-        $(".alpha_link").click(function()
+        $(".alpha_link").click(function(event)
         {
-
+            event.preventDefault();
             var letter= $(this).attr("id");
             currentLetter = letter;
             $('#country_list').hide(300,function(){
@@ -195,8 +196,9 @@ $(function() {
                     $("#country_list").append('<li><a class="country_link" href="" id="'+country_list[i][0]+'" na="'+country_list[i][1]+'">'+country_list[i][1]+"</a></li>");
                 }
 
-                $(".country_link").click(function()
+                $(".country_link").click(function(event)
                 {
+                    event.preventDefault();
                     var country= $(this).attr("id");
                     currentCountryName  =$(this).attr("na");
                     currentCountry = country;
@@ -207,28 +209,19 @@ $(function() {
                         var p2 = generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
                         c.animate({path:p2},1000);
                     });
-
-                    return false;
                 });
                 $('#country_list').show(300);
-                return false;
             });
-            return false;
         });
-        $(".year_link").click(function()
+        $(".year_link").click(function(event)
         {
+            event.preventDefault();
             var year= $(this).attr("id");
             currentYear = year;
              $('#currentYear').text(year);
             var p2 = generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
             c.animate({path:p2},1000);
             changeUrl();
-            return false;
         });
-
     });
-
-
-
-
 });
