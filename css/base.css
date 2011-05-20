@@ -3,7 +3,7 @@ body {
     line-height:1.2em;
     font-size:15px;
 
-    background-image: url(texture_tile.jpg); background-repeat: repeat;
+    background-image: url(../media/texture_tile.jpg); background-repeat: repeat;
 
 }
 h1{
