@@ -66,6 +66,9 @@ function keys(obj)
 }
 function changeUrl()
 {
+    _gaq.push(['_trackEvent', 'country', currentCountry]);
+    _gaq.push(['_trackEvent', 'year', currentYear+""]);
+    _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
     var url = "http://populationpyramid.net/?country="+currentCountry+"&year="+currentYear;
     var pop=tot_pop[currentCountry][currentYear]*1000+"";
     var string_pop="";
