@@ -92,3 +92,15 @@ ul {
     height:80px;
     width:250px;
 }
+
+#movingworld_subdiv
+{
+    padding:5px;
+    font-size:0.8em;
+    padding-top:-10px;
+
+}
+    #movingworld_subdiv img
+    {
+        padding: 2px;
+    }
