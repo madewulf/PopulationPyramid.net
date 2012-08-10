@@ -92,17 +92,6 @@ function changeUrl()
 }
 
 $(function() {
-    var params=getUrlVars();
-    if (params['country'])
-    {
-        currentCountry=params['country'];
-        currentLetter=currentCountry[0].toLowerCase();
-    }
-    if (params['year'])
-    {
-        currentYear= params['year'];
-    }
-    changeUrl();
     var dat;
     $.getJSON( "data/"+currentCountry+".js",function(data){
         var i;
@@ -115,8 +104,8 @@ $(function() {
 
         var male_rect= paper.rect(0,0,canvas_size/2,canvas_size);
         var female_rect= paper.rect(canvas_size/2,0,canvas_size/2,canvas_size);
-        male_rect.attr({'fill':'#3600FF','fill-opacity':'1'});//#4e81ba
-        female_rect.attr({'fill':'#D900FF','fill-opacity':'1'});//#d85898
+        male_rect.attr({'fill':'#07669d','fill-opacity':'1'});//#4e81ba
+        female_rect.attr({'fill':'#D156BF','fill-opacity':'1'});//#d85898
         var l = labels.length;
         var h_increment = canvas_size/(l+1);
         for (i=0;i<l;i++ )
@@ -162,9 +151,18 @@ $(function() {
          {
              $("#country_list").append('<li><a class="country_link" href="" id="'+country_list[i][0]+'" na="'+country_list[i][1]+'">'+country_list[i][1]+"</a></li>");
          }
+        var p1= generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
+        c = paper.path(p1);
+        c.attr({stroke:'#fff','stroke-width' :2,'stroke-linecap':'round',fill:'#fff','fill-opacity':'0.8'});
 
-         $(".country_link").click(function()
+
+
+
+         $(".country_link").click(function(event)
          {
+             event.preventDefault();
+             $(".country_link").removeClass("selected_link");
+             $(this).addClass("selected_link");
              var country= $(this).attr("id");
              currentCountryName  =$(this).attr("na");
              currentCountry = country;
@@ -175,15 +173,15 @@ $(function() {
                  var p2 = generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
                  c.animate({path:p2},1000);
              });
-             return false;
          });
 
-        var p1= generatePath(paper,dat[currentYear]['M'],dat[currentYear]['F']);
-        c = paper.path(p1);
-        c.attr({stroke:'#fff','stroke-width' :2,'stroke-linecap':'round',fill:'#fff','fill-opacity':'0.8'});
+
         $(".alpha_link").click(function(event)
         {
             event.preventDefault();
+            $(".alpha_link").removeClass("selected_link");
+            $(this).addClass("selected_link");
+
             var letter= $(this).attr("id");
             currentLetter = letter;
             $('#country_list').hide(300,function(){
@@ -202,6 +200,8 @@ $(function() {
                 $(".country_link").click(function(event)
                 {
                     event.preventDefault();
+                    $(".country_link").removeClass("selected_link");
+                      $(this).addClass("selected_link");
                     var country= $(this).attr("id");
                     currentCountryName  =$(this).attr("na");
                     currentCountry = country;
@@ -218,6 +218,8 @@ $(function() {
         });
         $(".year_link").click(function(event)
         {
+            $(".year_link").removeClass("selected_link");
+            $(this).addClass("selected_link");
             event.preventDefault();
             var year= $(this).attr("id");
             currentYear = year;

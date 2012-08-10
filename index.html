@@ -1,6 +1,7 @@
-<!DOCTYPE html>
-    <head>
-        <title>Population Pyramids of the Whole World - from 1950 to 2050 - PopulationPyramid.net</title>
+<html itemscope itemtype="http://schema.org/">
+<head>
+    <title>Population Pyramids of the Whole World - from 1950 to 2050 - PopulationPyramid.net</title>
+    <!-- facebook open graphs tags-->
     <meta property="og:title" content="PopulationPyramid.net"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://populationpyramid.net/"/>
@@ -9,126 +10,116 @@
     <meta property="fb:admins" content="548900828"/>
     <meta property="og:description"
           content="Interactive Visualization of the Population Pyramids of the World from 1950 to 2050"/>
-        <meta charset="utf-8" />
-        <META name="description" content="Visualization of the population pyramids of the world, based on the United Nations data."/>
-        <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
-        <link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold,italic,bolditalic' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="js/raphael.js"></script>
-        <script type="text/javascript" src="js/jquery.js"></script>
+
+    <!-- schema.org tags, mainly for google+-->
+    <meta itemprop="name" content="populationpyramid.net">
+    <meta itemprop="description" content="Population pyramids of the world from 1950 to 2050">
+    <meta itemprop="image" content="http://populationpyramid.net/media/facebook-image.png">
+
+    <meta charset="utf-8"/>
+    <META name="description"
+          content="Visualization of the population pyramids of the world, based on the United Nations data."/>
+    <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:400italic|Prata' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/raphael.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-21050559-1']);
         _gaq.push(['_trackPageview']);
 
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
         })();
 
     </script>
-        <script type="text/javascript" src="pyramid.js"></script>
-        <link rel="shortcut icon" href="favicon.ico">
-        <link rel="stylesheet" type="text/css" href="css/base.css" />
-        <link rel="stylesheet" type="text/css" href="css/960.css" />
+    <script type="text/javascript" src="pyramid.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+</head>
+<body>
+<div id="title" style="color:white; background-color:#07669d;
+    font-size : 15px;
+    padding: 5px 0 5px 0; border-bottom:solid #D156BF 1px;">
 
-    </head>
-    <body>
-    <div class="container_12">
-        <div id="movingworld_div" style="float:right;width:300px;">
-             <div id="movingworld_subdiv">
-             <a href="http://launch.movingworldapp.com"><img style="width:50px;height:50px; float:right;" src="movingworld.png"/> </a>
-             <p>Soon available on the iPad app store as part of the Moving World app:</p>
-             <p><a href="http://launch.movingworldapp.com">Register here to be notified about the app release.</a></p>
-             </div>
-         </div>
-        <div id="title" class="grid_8">
-              <h1>Population Pyramids of the World: 1950-2050</h1>
-                <span id="wikipedia_link">
-                    <a href="http://en.wikipedia.org/wiki/Population_pyramid" >(What is a population pyramid?)</a>
-                </span>
+    <div style="width:960px; margin:auto;">
+        <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2050</h1>
+        <div style="float:right; margin-top:-19px;"><g:plusone size="medium" annotation="inline" width="120" href="http://populationpyramid.net"></g:plusone>
+        </div>
+        <div style="float:right; margin-top:-19px;"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpopulationpyramid.net&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=20&amp;appId=205567582820738" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe></div>
+        <p style="float:right; margin-top:-17px; margin-right:10px; color:#66A7CC; font-size:0.8em;">Soon on iPad as part of the <a href="http://movingworldapp.com" style="color:#66A7CC;text-decoration: underline; ">Moving World App</a></p>
+    </div>
+
+</div>
+<div id="container">
+
+    <div style="width:960px; padding: 10px 0 72px 0;">
+        <h2>
+            <span id="currentCountry"></span>
+        </h2>
+
+        <div style="width:500px;">
+            <h2 style="float:left; ">
+                <span id="currentYear">2010</span>
+            </h2>
+
+            <h2 style="float:right;">
+                <span id="pop_span">Population:</span>
+                <span id="tot_pop"></span>
+            </h2>
         </div>
 
 
     </div>
-        <div id="header" class="container_12">
-            <div id="current_country_div" class="grid_8 ">
-                <h2>
-                 <span id="currentCountry"></span> <br/>
-                </h2>
-            </div>
 
+    <div id="content" style="clear:both;    ">
+        <div id="canvas_container_div">
+            <div id="canvas_container"></div>
         </div>
 
-        <div id="header2" class="container_12">
-            <div id="title2" class="grid_7">
-                <h2>
-                    <span id="tot_pop"></span>
-                    <span id="currentYear">2010</span> <br/>
-                </h2>
-            </div>
-
-        </div>
-        <div class="clear"></div>
-        <div id="content" class="container_12">
-            <div id="canvas_container_div" class="grid_7 " >
-                <div id="canvas_container" ></div>
-            </div>
-
-            <div id="year_list_div" class="grid_1 " style="display: table-cell; vertical-align: middle;">
-                <ul id="year_list">
-                </ul>
-            </div>
-
-            <div id="alpha_list_div" class="grid_1 ">
-                <div style="margin-left:11px;">
-                <ul id="alpha_list">
-                </ul>
-                </div>
-            </div>
-
-            <div id="country_list_div" class="grid_3 ">
-                <ul id="country_list">
-
-                </ul>
-            </div>
-        </div>
-        <div id="link" class="container_12">
-               <div id="url_div" class="grid_12">
-                    Link: <a href="" id="page_url"><span id="url"></span></a>
-                </div>
-        </div>
-        <div id="footer" class="container_12">
-        <div id="about_div" class="grid_7 ">
-        <div id="about">
-        <p><strong>Source:</strong></p>
-        <p><em>Population Division of the Department of Economic and Social Affairs of the United Nations Secretariat, World Population Prospects: The 2008 Revision</em>
-        </p>
-        <p><a href="http://esa.un.org/unpp">http://esa.un.org/unpp</a> (Medium Variant)</p>
-        <p>Data downloaded on Saturday, December 04, 2010 at 7:16 PM.</p>
+        <div id="year_list_div" class="nav_links_div" style="text-align: center;">
+            <ul id="year_list">
+            </ul>
         </div>
 
+        <div id="alpha_list_div" class="nav_links_div" style="text-align: center;">
+            <ul id="alpha_list">
+            </ul>
         </div>
 
-        <div id="before_tech_div" class="grid_1 ">
-            <p></p>
+        <div id="country_list_div" class="nav_links_div">
+            <ul id="country_list">
+
+            </ul>
         </div>
-        <div id="tech_div" class="grid_4 ">
-        <iframe src="http://www.facebook.com/plugins/like.php?app_id=132170133524752&amp;href=http%3A%2F%2Fpopulationpyramid.net&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
-            <p>Visualization by <a href="http://multitasked.net">Martin De Wulf</a>.</p>
-
-           <p>Made using <a href="http://raphaeljs.com/">Raphaël</a>, <a href="http://jquery.com">JQuery</a> and
-               <a href="http://python.org/">Python</a> </p>
-          <p>
-           <p>All code is on <a href="https://github.com/madewulf/populationpyramid.net">github.com</a> under MIT License</p>
-            <p> <p><a href="http://www.multitasked.net/2011/feb/5/about-population-pyramid-net/" id="blog_link">Learn more about this project</a>
-</p></p>
+    </div>
+    <!--<div id="link">
+        <div id="url_div">
+            Link: <a href="" id="page_url"><span id="url"></span></a>
         </div>
+    </div>-->
+    <div id="footer">
+        <p>
+           Visualization by <a href="http://multitasked.net">Martin De Wulf</a> (<a href="http://twitter.com/madewulf">@madewulf</a>) &mdash;
+           All code on <a href="https://github.com/madewulf/populationpyramid.net">github</a> &mdash;
 
-        </div>
+        <a href="http://www.multitasked.net/2011/feb/5/about-population-pyramid-net/" id="blog_link">Learn more about
+            this project</a>
+    </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</body>
 
-
-    </body>
-
-    </html>
+</html>

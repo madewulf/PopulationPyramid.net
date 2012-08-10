@@ -1,106 +1,173 @@
+/*css reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
 body {
-    font-family: 'Nobile', Arial, sans-serif;
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*end of css reset*/
+
+@font-face {
+    font-family: 'LeagueGothic';
+    src: url('../fonts/League_Gothic-webfont.eot?') format('eot'),
+         url('../fonts/League_Gothic-webfont.woff') format('woff'),
+         url('../fonts/League_Gothic-webfont.ttf') format('truetype'),
+         url('../fonts/League_Gothic-webfont.svg#webfontKPE9HKoH') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+
     line-height:1.2em;
     font-size:15px;
+    color: #07669d;
+    font-family: 'Prata', serif;
+}
 
-    background-image: url(../media/texture_tile.jpg); background-repeat: repeat;
-
-}
-h1{
-    font-family: 'Nobile', Arial, Verdana,sans-serif;
-    line-height:1.2em;
-    font-size:16px;
-    margin-top:0px;
-    !margin-top:0px;
-    display:inline;
-}
-h3{
-    font-family: 'Nobile', Arial, Verdana,sans-serif;
-    line-height:1em;
-    font-size:18px;
-    color:#ccc;
-    text-align:right;
-    margin-top:-7px;
-    !margin-top:0px;
-}
-h2{
-    font-family: 'Nobile', Arial, Verdana,sans-serif;
-    line-height:1em;
-    font-size:30px;
-    font-weight:bold;
-    margin-left:30px;
+h2
+{
+    font-family: 'LeagueGothic';
+    font-size: 65px;
+    padding: 22px 0 21px 0;
+    text-shadow: 0px -1px 0px #7B9BAD;
 
 }
-#current_country_div{
-    margin-top:-5px;
-}
-#title2 {
-    !padding-top:30px;
-    margin-top:-50px;
-    margin-bottom:-10px;
-}
+
+a:link {color:#07669d;text-decoration: none }      /* unvisited link */
+a:visited {color:#07669d;}  /* visited link */
+a:hover {color:#D156BF;}  /* mouse over link */
+a:active {color:#D156BF;}  /* selected link */
+
 #canvas_container {
     width: 500px;
-    border: 2px solid #aaa;
-    padding:20px;
-    margin:10px;
-    border-radius: 15px;
-    -moz-border-radius:15px;
 
 }
-#about {
-    margin-left:30px;
-}
 
-#url_div{
-  margin-bottom:5px;
-  margin-left:40px;
-}
-a {
-    text-decoration:none;
-    color:#3600FF;
-}
-a:hover {
-    text-decoration:none;
-    color:#D900FF;
-    background-color:white;
-}
-#tot_pop{
-    float:right;
-}
-ul {
-    list-style-type :none;
-}
-#year_list li, #country_list li
+#container
 {
-    display:block;
+    margin:auto;
+    width:960px;
+    padding: 0 0 0 10px;
 
 }
-#alpha_list li
+
+#canvas_container_div
 {
-    display:block;
-    text-align:center;
+    float:left;
+    width:500px;
+
+
 }
 
-#wikipedia_link
+#year_list_div
 {
-    font-size:0.8em;
-    margin:0;
+    float:left;
+    padding: 0 0px 0 20px;
+    width:30px;
+    text-align: center;
 }
 
-#facebook_like{
-    height:80px;
-    width:250px;
-}
-
-#movingworld_subdiv
+#alpha_list_div
 {
-    padding:5px;
-    font-size:0.8em;
-    padding-top:-10px;
+    float:left;
+    margin: 0 20px 0 20px;
+    padding: 0 20px 0 20px;
+    width:30px;
+    text-align: center;
+    border-left: dotted 1px #eeeeee;
+    border-right: dotted 1px #eeeeee;
+}
+
+#country_list_div
+{
+    float:left;
+    padding: 0 0 0 0px;
+    width : 298px;
 
 }
-    #movingworld_subdiv img
-    {
-        padding: 2px;
-    }
+#link {
+    display:hidden;
+}
+
+.nav_links_div a
+{
+    line-height: 1.35;
+}
+
+
+#footer{
+    clear: both;
+    padding-top: 70px;
+    padding-bottom: 10px;
+    width:960px;
+
+}
+
+a.selected_link
+{
+    color:white;
+    background-color: #07669d;
+    text-decoration: none;
+    padding: 1px 2px;
+    margin: 0px -2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    text-align: center;
+}
+
+#pop_span
+{
+    font-size: 15px;
+    color: #66A7CC;
+
+    //font-family: georgia, serif;
+    text-shadow:none;
+
+}
+
+#footer a
+{
+
+    text-decoration: underline;
+}
