@@ -3,12 +3,17 @@ from flask import render_template
 
 app = Flask(__name__)
 
-
+@app.route('/')
+def root():
+    return pyramid('world',2010)
 
 @app.route('/<country>/<int:year>')
 def pyramid(country,year):
-    print "" + country + str(year)
-    return  render_template("index.html")
+    return  render_template("index.html",
+                            currentCountry=country,
+                            currentCountryName="World",
+                            currentYear=year,
+                            currentLetter = "w")
 
 if __name__ == '__main__':
     with app.test_request_context():

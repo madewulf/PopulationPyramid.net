@@ -1,8 +1,5 @@
 var canvas_size = 500;
-var currentCountry = "World";
-var currentCountryName = "World";
-var currentYear = "2010";
-var currentLetter="w";
+
 var multiplier=5;
 var labels = [' 0-4', ' 5-9', ' 10-14', ' 15-19', ' 20-24', ' 25-29', ' 30-34', ' 35-39', ' 40-44', ' 45-49', ' 50-54', ' 55-59', ' 60-64', ' 65-69', ' 70-74', ' 75-79', ' 80-84', ' 85-89', ' 90-94', ' 95-99', ' 100+'];
 var years = ['1950', '1955', '1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025', '2030', '2035', '2040', '2045', '2050'];
@@ -69,6 +66,7 @@ function changeUrl()
     _gaq.push(['_trackEvent', 'country', currentCountry]);
     _gaq.push(['_trackEvent', 'year', currentYear+""]);
     _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
+    history.pushState({"coucou":"coucou"}, "", "/"+currentCountry+"/"+currentYear);
     var url = "http://populationpyramid.net/?country="+currentCountry+"&year="+currentYear;
     var pop=tot_pop[currentCountry][currentYear]*1000+"";
     var string_pop="";
@@ -90,6 +88,10 @@ function changeUrl()
     }
     $('#tot_pop').text(string_pop);
 }
+
+window.onpopstate = function(event) {
+ // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+};
 
 $(function() {
     var dat;
