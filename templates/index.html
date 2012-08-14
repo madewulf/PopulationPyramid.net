@@ -21,6 +21,7 @@
           content="Visualization of the population pyramids of the world, based on the United Nations data."/>
     <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400italic|Prata' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
     <script type="text/javascript" src="/static/js/raphael.js"></script>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript">
@@ -41,13 +42,11 @@
     </script>
     <script type="text/javascript">
         var currentCountry = "{{currentCountry }}";
-        var currentCountryName = "{{currentCountryName }}";
-        var currentYear =  "{{currentYear }}";
+        var currentYear =  "{{currentYear}}";
         var currentLetter= "{{currentLetter }}";
     </script>
     <script type="text/javascript" src="/static/js/pyramid.js"></script>
     <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
 </head>
 <body>
 <div id="title" style="color:white; background-color:#07669d;
@@ -67,7 +66,7 @@
 
     <div style="width:960px; padding: 10px 0 72px 0;">
         <h2>
-            <span id="currentCountry"></span>
+            <span id="currentCountry">{{currentCountryName}}</span>
         </h2>
 
         <div style="width:500px;">
@@ -80,8 +79,6 @@
                 <span id="tot_pop"></span>
             </h2>
         </div>
-
-
     </div>
 
     <div id="content" style="clear:both;    ">
@@ -91,17 +88,26 @@
 
         <div id="year_list_div" class="nav_links_div" style="text-align: center;">
             <ul id="year_list">
+                {% for year in years %}
+                <li><a class="year_link" href="/{{currentCountry}}/{{year}}" id="{{year}}">{{year}}</a></li>
+                {%endfor%}
             </ul>
         </div>
 
         <div id="alpha_list_div" class="nav_links_div" style="text-align: center;">
             <ul id="alpha_list">
+                {% for char in alphabet %}
+                   <li><a class="alpha_link" href="/{{currentCountry}}/{{currentYear}}/{{char}}" id="{{char}}">{{char}} </a></li>
+                {%endfor%}
+
             </ul>
         </div>
 
         <div id="country_list_div" class="nav_links_div">
             <ul id="country_list">
-
+                {% for country_t in country_tuples%}
+                <li></li><a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a><li>
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -118,7 +124,7 @@
         <a href="http://www.multitasked.net/2011/feb/5/about-population-pyramid-net/" id="blog_link">Learn more about
             this project</a>
     </div>
-    <p>Suggested citation: United Nations, Department of Economic and Social Affairs, Population Division (2011). World Population Prospects: The 2010 Revision.</p>
+    <p>United Nations, Department of Economic and Social Affairs, Population Division (2011). World Population Prospects: The 2010 Revision.</p>
 </div>
 <script type="text/javascript">
   (function() {

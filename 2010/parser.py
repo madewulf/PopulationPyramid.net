@@ -3,6 +3,8 @@ import csv
 import urllib
 import json
 from collections import defaultdict
+import pickle
+
 files = {
     "male":
             {
@@ -77,7 +79,7 @@ def age_to_int(age):
         return 100
 
 for encoded_country in encoded_countries_list:
-    f = open("generated/%s.js" % encoded_country,'w')
+    f = open("generated/%s.json" % encoded_country,'w')
     f.write(json.dumps(res_dict[encoded_country]))
     f.close()
 
@@ -87,12 +89,21 @@ age_labels = [' 0-4', ' 5-9', ' 10-14', ' 15-19', ' 20-24', ' 25-29', ' 30-34', 
 main_data_dict ={
     'alphabet':alphabet,
     'lettersToCountriesList':letters_to_countries_list_dict,
+    'countriesHumanNames': countries_dict,
     'populations':pop_dict,
     'years':year_list,
-    'countriesHumanNames': countries_dict,
     'ageLabels':age_labels
-
 }
+
+f= open('letters_to_countries_list_dict.pickle','w')
+pickle.dump(letters_to_countries_list_dict,f)
+f.close
+
+f = open('countries_dict.pickle','w')
+pickle.dump(countries_dict,f)
+f.close
+
+
 
 f = open('mainData.json','w')
 f.write(json.dumps(main_data_dict))
