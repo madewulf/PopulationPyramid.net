@@ -84,6 +84,7 @@ a:active {color:#D156BF;}  /* selected link */
 
 #canvas_container2 {
     width: 520px;
+    padding-bottom:10px;
 
 }
 

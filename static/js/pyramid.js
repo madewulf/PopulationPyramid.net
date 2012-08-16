@@ -1,6 +1,6 @@
 var canvas_size = 420,
     multiplier = 5,
-    curveWidth = 520,
+    curveWidth = 400,
     curveHeight = 100,
     c,
     curve,
@@ -13,7 +13,9 @@ var canvas_size = 420,
     countriesHumanNames,
     ageLabels,
     currentCountryData,
-    cross;
+
+    cross,
+    axes;
 
 
 function getUrlVars() {
@@ -160,13 +162,21 @@ function drawPopulationCurve()
         if (currentVal > maxP)
             maxP = currentVal;
     }
-    var spanP = maxP - minP;
-    var spacing = useableWidth/(l-1);
+    var spanP = maxP ;
+    var spacing = useableWidth/(l);
 
+    /*axes drawing*/
+    var axesPath = "M " + curvePadding + " " + (curvePadding + useableHeight) + "H" +  (curvePadding*2 + useableWidth);// horizontal axis
+    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding) + " " + ((curvePadding + useableHeight) -curvePadding) + "L" + (curvePadding*2 + useableWidth) + ' ' + (curvePadding + useableHeight) ;
+    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding) + " " + ((curvePadding + useableHeight) +curvePadding) + "L" + (curvePadding*2 + useableWidth) + ' ' + (useableHeight + curvePadding) ;
+
+    axesPath += "M " + curvePadding + " " + curvePadding + "V "+ (curvePadding + useableHeight); // vertical axis
+    axes = paper2.path(axesPath);
+    axes.attr({stroke:'#07669d', 'stroke-width':1});
     /*cross drawing*/
     var currentPopValue = populations[currentCountry][currentYear];
-       var index = (currentYear - 1950)/5;
-       y = (1- ((currentPopValue - minP) /spanP))*useableHeight +curvePadding/2 ;
+       var index = (currentYear - 1945)/5;
+       y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
        x = index*spacing + curvePadding;
        var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
        console.log("crosspath" + crossPath);
@@ -180,8 +190,8 @@ function drawPopulationCurve()
     {
         year = years[i];
         var popValue = populations[currentCountry][year];
-        y = (1- ((popValue - minP) /spanP))*useableHeight +curvePadding ;
-        x = i*spacing + curvePadding;
+        y = (1- ((popValue) /spanP))*useableHeight +curvePadding ;
+        x = (i+1)*spacing + curvePadding;
         if (i==0)
             curveString +="M";
         else
@@ -193,7 +203,7 @@ function drawPopulationCurve()
     if (curve)
         curve.remove();
     curve = paper2.path(curveString);
-    curve.attr({stroke:'#07669d', 'stroke-width':1, 'stroke-linecap':'round'});
+    curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
 }
 $(function () {
     $.getJSON("/static/data/mainData.json", function (mainData) {
