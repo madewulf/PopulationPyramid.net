@@ -35,13 +35,17 @@ for sex in files:
                 encoded_country =  urllib.quote_plus(country.decode('ascii','ignore'))
                 countries_dict[encoded_country]=country
                 i=0
-                for v in row[6:]:
+                for v in row[6:22]+row[23:]:
+
                     try:
                         res_dict[encoded_country][year][sex][i]=int(v)
                     except:
                         if v!="…":
                             print "failed on :'%s' " % v
                         res_dict[encoded_country][year][sex][i]=0
+                    if country=="WORLD" and year==2100:
+                        print sex, year, i, v
+
                     i = i+1
                     count = count +1
 
@@ -65,11 +69,13 @@ for c in encoded_countries_list:
 pop_dict = defaultdict(f)
 for encoded_country in encoded_countries_list:
     for year in year_list:
+        sum =0
         for sex in ('male','female'):
-            sum =0
             for i in res_dict[encoded_country][year][sex]:
                 sum += res_dict[encoded_country][year][sex][i]
-            pop_dict[encoded_country][year]=sum
+        pop_dict[encoded_country][year]=sum
+
+print res_dict['WORLD'][2100]
 
 #print pop_dict
 def age_to_int(age):

@@ -78,9 +78,15 @@ a:hover {color:#D156BF;}  /* mouse over link */
 a:active {color:#D156BF;}  /* selected link */
 
 #canvas_container {
-    width: 500px;
+    width: 420px;
 
 }
+
+#canvas_container2 {
+    width: 520px;
+
+}
+
 
 #container
 {
@@ -93,11 +99,15 @@ a:active {color:#D156BF;}  /* selected link */
 #canvas_container_div
 {
     float:left;
-    width:500px;
-
-
+    width:420px;
 }
 
+#curve_div
+{
+    float:left;
+    width:520px;
+    margin:0 0 0 20px;
+}
 #year_list_div
 {
     float:left;

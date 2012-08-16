@@ -1,14 +1,20 @@
-var canvas_size = 500,
+var canvas_size = 420,
     multiplier = 5,
+    curveWidth = 520,
+    curveHeight = 100,
     c,
+    curve,
     paper,
+    paper2,
     alphabet,
     lettersToCountriesList,
     populations,
     years,
     countriesHumanNames,
     ageLabels,
-    currentCountryData;
+    currentCountryData,
+    cross;
+
 
 function getUrlVars() {
     var vars = [], hash;
@@ -22,8 +28,8 @@ function getUrlVars() {
     return vars;
 }
 
-function generatePath() {
-
+function generatePath()
+{
     var
         h_increment = canvas_size / (22),
         pathString = "",
@@ -31,8 +37,7 @@ function generatePath() {
         i,
         male_value,
         female_value,
-        totalPop = populations[currentCountry][currentYear]
-        total=0;
+        totalPop = populations[currentCountry][currentYear];
 
     for (i = 0; i < 22; i++) {
         if (i === 0) {
@@ -46,14 +51,10 @@ function generatePath() {
 
         male_value = currentCountryData[currentYear]['male'][''+i]/totalPop;
         female_value = currentCountryData[currentYear]['female'][''+21-i]/totalPop;
-        total += male_value + female_value;
 
-        console.log('male_value ' + male_value + ' female_value ' + female_value + ' total ' +total  );
-
-        pathString += Math.round(canvas_size / 2 - female_value* canvas_size * multiplier/2) + " " + Math.round((i) * h_increment);
-        pathString2 += Math.round(canvas_size / 2 + male_value * canvas_size * multiplier/2) + " " + Math.round((21 - i) * h_increment);
+        pathString += Math.round(canvas_size / 2 - female_value* canvas_size * multiplier) + " " + Math.round((i) * h_increment);
+        pathString2 += Math.round(canvas_size / 2 + male_value * canvas_size * multiplier) + " " + Math.round((21 - i) * h_increment);
     }
-
     pathString = pathString2 + pathString + "z";
 
     return pathString;
@@ -70,34 +71,10 @@ function keys(obj) {
     return keysList;
 }
 
-function changeUrl() {
-    _gaq.push(['_trackEvent', 'country', currentCountry]);
-    _gaq.push(['_trackEvent', 'year', currentYear + ""]);
-    _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
-    history.pushState({"coucou":"coucou"}, "", "/" + currentCountry + "/" + currentYear);
-    var url = "http://populationpyramid.net/?country=" + currentCountry + "&year=" + currentYear;
-    var pop = tot_pop[currentCountry][currentYear] * 1000 + "";
-    var string_pop = "";
-    var l = pop.length;
-    var i;
-    $('#url').text(url);
-
-    $('#page_url').attr("href", url);
-    $('#currentYear').text(currentYear);
-
-    for (i = 0; i < l; i++) {
-        if ((l - i) % 3 === 0 && i !== 0) {
-            string_pop += ".";
-        }
-        string_pop += pop.charAt(i);
-
-    }
-    $('#tot_pop').text(string_pop);
-}
-
 window.onpopstate = function (event) {
     // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 };
+
 
 function drawAxes() {
     paper = new Raphael(document.getElementById('canvas_container'), canvas_size, canvas_size);
@@ -132,13 +109,92 @@ function drawAxes() {
     }
 }
 
-/*var country_list = lettersToCountriesList[currentLetter.toUpperCase()];
 
- for (var i= 0, cl = country_list.length; i<cl; i++) {
- var country = country_list[i];
- $("#country_list").append('<li><a class="country_link" href="" id="' + country + '" na="' + country + '">' + countriesHumanNames[country] + "</a></li>");
- }*/
+function setLabels()
+{
+    $('#current_year').text(currentYear);
+    currentCountryName = countriesHumanNames[currentCountry];
+    $("#currentCountry").text(currentCountryName);
+    var pop = populations[currentCountry][currentYear]*1000+'';
+    var stringPop="";
+    for (var i = 0, l = pop.length; i < l; i++) {
+          if ((l - i) % 3 === 0 && i !== 0) {
+              stringPop += ".";
+          }
+        stringPop += pop.charAt(i);
 
+      }
+      $('#tot_pop').text(stringPop);
+}
+
+function changeUrl() {
+    _gaq.push(['_trackEvent', 'country', currentCountry]);
+    _gaq.push(['_trackEvent', 'year', currentYear + ""]);
+    _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
+    history.pushState({"coucou":"coucou"}, "", "/" + currentCountry + "/" + currentYear);
+}
+
+function changePyramidInfo()
+{
+    setLabels();
+    changeUrl();
+    drawPopulationCurve();
+}
+
+function drawPopulationCurve()
+{
+    var curveString = "";
+    var l = years.length;
+    var minP=20000000;
+    var maxP = 0 ;
+    var year, x, y;
+    var curvePadding = 3;
+    var useableWidth = curveWidth -curvePadding*2;
+    var useableHeight = curveHeight -curvePadding*2;
+    for (var i=0;i<l;i++)
+    {
+        year = years[i];
+        var currentVal =  populations[currentCountry][year];
+        if (currentVal < minP)
+            minP = currentVal;
+        if (currentVal > maxP)
+            maxP = currentVal;
+    }
+    var spanP = maxP - minP;
+    var spacing = useableWidth/(l-1);
+
+    /*cross drawing*/
+    var currentPopValue = populations[currentCountry][currentYear];
+       var index = (currentYear - 1950)/5;
+       y = (1- ((currentPopValue - minP) /spanP))*useableHeight +curvePadding/2 ;
+       x = index*spacing + curvePadding;
+       var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
+       console.log("crosspath" + crossPath);
+       if (cross )
+           cross.remove();
+       cross = paper2.path(crossPath);
+       cross.attr({stroke:'#07669d', 'stroke-width':1,'stroke-opacity':'0.2','stroke-dasharray': "-"});
+
+    /*curve drawing*/
+    for (var i=0;i<l;i++)
+    {
+        year = years[i];
+        var popValue = populations[currentCountry][year];
+        y = (1- ((popValue - minP) /spanP))*useableHeight +curvePadding ;
+        x = i*spacing + curvePadding;
+        if (i==0)
+            curveString +="M";
+        else
+            curveString +="L";
+        curveString += x +" " + y;
+    }
+
+
+    if (curve)
+        curve.remove();
+    curve = paper2.path(curveString);
+    curve.attr({stroke:'#07669d', 'stroke-width':1, 'stroke-linecap':'round'});
+}
 $(function () {
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,
@@ -148,15 +204,13 @@ $(function () {
             countriesHumanNames = mainData.countriesHumanNames,
             ageLabels = mainData.ageLabels;
         drawAxes();
-        // $('#currentCountry').text(currentCountry);
-        //var p1 = generatePath(paper, dat[currentYear]['M'], dat[currentYear]['F']);
-        //c = paper.path(p1);
-        //c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
+        paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                   currentCountryData = data;
                   var p1 = generatePath( );
                   c = paper.path(p1);
                   c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
+                  changePyramidInfo();
               });
     });
 
@@ -165,14 +219,28 @@ $(function () {
         $(".country_link").removeClass("selected_link");
         $(this).addClass("selected_link");
         var country = $(this).attr("id");
-        currentCountryName = $(this).attr("na");
         currentCountry = country;
-        $('#currentCountry').text(currentCountryName);
+        changePyramidInfo();
         $.getJSON("/static/data/generated/" + country + ".json", function (data) {
             currentCountryData = data;
             var p2 = generatePath( );
             c.animate({path:p2}, 1000);
+            changePyramidInfo();
         });
+    });
+
+
+
+    $("#year_list_div ul").on("click", "a", function (event) {
+        $(".year_link").removeClass("selected_link");
+        $(this).addClass("selected_link");
+        event.preventDefault();
+        var year = $(this).attr("id");
+        currentYear = year;
+        $('#currentYear').text(year);
+        var p2 = generatePath( );
+        c.animate({path:p2}, 1000);
+        changePyramidInfo();
     });
 
     $("#alpha_list_div ul").on("click", "a", function (event) {
@@ -198,14 +266,4 @@ $(function () {
 
     });
 
-    $("#year_list_div ul").on("click", "a", function (event) {
-        $(".year_link").removeClass("selected_link");
-        $(this).addClass("selected_link");
-        event.preventDefault();
-        var year = $(this).attr("id");
-        currentYear = year;
-        $('#currentYear').text(year);
-        var p2 = generatePath( );
-        c.animate({path:p2}, 1000);
-    });
 });

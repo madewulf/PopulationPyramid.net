@@ -5,12 +5,9 @@ import pickle
 app = Flask(__name__)
 
 @app.route('/')
-def root():
-    return pyramid('world',2010)
-
 @app.route('/<country>/<int:year>/')
 @app.route('/<country>/<int:year>/<currentLetter>/')
-def pyramid(country,year,currentLetter=None):
+def pyramid(country="WORLD",year="2010",currentLetter=None):
     years = range(1950,2101,5)
     alphabet = map(chr, range(65, 91))
     f = open('2010/letters_to_countries_list_dict.pickle')
@@ -22,6 +19,7 @@ def pyramid(country,year,currentLetter=None):
     f.close()
     currentCountryName = countries_dict.get(country,None)
 
+    print "country", country
     if currentCountryName is None:
         return make_response(render_template('404.html'), 404)
     else :
@@ -29,8 +27,9 @@ def pyramid(country,year,currentLetter=None):
             currentLetter = currentCountryName[0]
         country_list = letters_to_countries_list_dict[currentLetter.upper()]
         country_tuples = []
-        for country in country_list:
-            country_tuples.append((country,countries_dict[country]))
+        for c in country_list:
+            country_tuples.append((c,countries_dict[c]))
+        print country, currentCountryName, year, currentLetter
         return  render_template("index.html",
                             currentCountry=country,
                             currentCountryName=currentCountryName,

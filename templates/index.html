@@ -1,6 +1,6 @@
 <html itemscope itemtype="http://schema.org/">
 <head>
-    <title>Population Pyramids of the Whole World - from 1950 to 2050 - PopulationPyramid.net</title>
+    <title>{{currentCountryName}} - Population Pyramids of the Whole World - from 1950 to 2100 - PopulationPyramid.net</title>
     <!-- facebook open graphs tags-->
     <meta property="og:title" content="PopulationPyramid.net"/>
     <meta property="og:type" content="website"/>
@@ -9,7 +9,7 @@
     <meta property="og:site_name" content="PopulationPyramid.net"/>
     <meta property="fb:admins" content="548900828"/>
     <meta property="og:description"
-          content="Interactive Visualization of the Population Pyramids of the World from 1950 to 2050"/>
+          content="Interactive Visualization of the Population Pyramids of the World from 1950 to 2100"/>
 
     <!-- schema.org tags, mainly for google+-->
     <meta itemprop="name" content="populationpyramid.net">
@@ -54,7 +54,7 @@
     padding: 5px 0 5px 0; border-bottom:solid #D156BF 1px;">
 
     <div style="width:960px; margin:auto;">
-        <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2050</h1>
+        <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2100: </h1>
         <div style="float:right; margin-top:-19px;"><g:plusone size="medium" annotation="inline" width="120" href="http://populationpyramid.net"></g:plusone>
         </div>
         <div style="float:right; margin-top:-19px;"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpopulationpyramid.net&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=20&amp;appId=205567582820738" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe></div>
@@ -69,7 +69,7 @@
             <span id="currentCountry">{{currentCountryName}}</span>
         </h2>
 
-        <div style="width:500px;">
+        <div style="width:420px;">
             <h2 style="float:left; ">
                 <span id="currentYear">2010</span>
             </h2>
@@ -85,7 +85,9 @@
         <div id="canvas_container_div">
             <div id="canvas_container"></div>
         </div>
-
+        <div id="curve_div">
+            <div id="canvas_container2"></div>
+        </div>
         <div id="year_list_div" class="nav_links_div" style="text-align: center;">
             <ul id="year_list">
                 {% for year in years %}
