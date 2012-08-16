@@ -7,7 +7,8 @@ var canvas_size = 500,
     populations,
     years,
     countriesHumanNames,
-    ageLabels;
+    ageLabels,
+    currentCountryData;
 
 function getUrlVars() {
     var vars = [], hash;
@@ -21,14 +22,19 @@ function getUrlVars() {
     return vars;
 }
 
-function generatePath(paper, male_tab, female_tab) {
-    var l = female_tab.length;
-    var h_increment = canvas_size / (l + 1);
-    var pathString = "";
-    var pathString2 = "";
-    var i;
+function generatePath() {
 
-    for (i = 0; i < l; i++) {
+    var
+        h_increment = canvas_size / (22),
+        pathString = "",
+        pathString2 = "",
+        i,
+        male_value,
+        female_value,
+        totalPop = populations[currentCountry][currentYear]
+        total=0;
+
+    for (i = 0; i < 22; i++) {
         if (i === 0) {
             pathString += "L";
             pathString2 += "M";
@@ -37,8 +43,15 @@ function generatePath(paper, male_tab, female_tab) {
             pathString += "L";
             pathString2 += "L";
         }
-        pathString += Math.round(canvas_size / 2 + female_tab[l - 1 - i] * canvas_size * multiplier) + " " + Math.round((i + 1) * h_increment);
-        pathString2 += Math.round(canvas_size / 2 - male_tab[i] * canvas_size * multiplier) + " " + Math.round((l - i) * h_increment);
+
+        male_value = currentCountryData[currentYear]['male'][''+i]/totalPop;
+        female_value = currentCountryData[currentYear]['female'][''+21-i]/totalPop;
+        total += male_value + female_value;
+
+        console.log('male_value ' + male_value + ' female_value ' + female_value + ' total ' +total  );
+
+        pathString += Math.round(canvas_size / 2 - female_value* canvas_size * multiplier/2) + " " + Math.round((i) * h_increment);
+        pathString2 += Math.round(canvas_size / 2 + male_value * canvas_size * multiplier/2) + " " + Math.round((21 - i) * h_increment);
     }
 
     pathString = pathString2 + pathString + "z";
@@ -121,27 +134,33 @@ function drawAxes() {
 
 /*var country_list = lettersToCountriesList[currentLetter.toUpperCase()];
 
-      for (var i= 0, cl = country_list.length; i<cl; i++) {
-          var country = country_list[i];
-          $("#country_list").append('<li><a class="country_link" href="" id="' + country + '" na="' + country + '">' + countriesHumanNames[country] + "</a></li>");
-      }*/
+ for (var i= 0, cl = country_list.length; i<cl; i++) {
+ var country = country_list[i];
+ $("#country_list").append('<li><a class="country_link" href="" id="' + country + '" na="' + country + '">' + countriesHumanNames[country] + "</a></li>");
+ }*/
 
 $(function () {
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,
-        lettersToCountriesList = mainData.lettersToCountriesList,
-        populations = mainData.populations,
-        years = mainData.years,
-        countriesHumanNames = mainData.countriesHumanNames,
-        ageLabels = mainData.ageLabels;
+            lettersToCountriesList = mainData.lettersToCountriesList,
+            populations = mainData.populations,
+            years = mainData.years,
+            countriesHumanNames = mainData.countriesHumanNames,
+            ageLabels = mainData.ageLabels;
         drawAxes();
-       // $('#currentCountry').text(currentCountry);
+        // $('#currentCountry').text(currentCountry);
         //var p1 = generatePath(paper, dat[currentYear]['M'], dat[currentYear]['F']);
         //c = paper.path(p1);
         //c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
+        $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
+                  currentCountryData = data;
+                  var p1 = generatePath( );
+                  c = paper.path(p1);
+                  c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
+              });
     });
 
-    $(".country_link").click(function (event) {
+    $("#country_list_div ul").on("click", 'a',function (event) {
         event.preventDefault();
         $(".country_link").removeClass("selected_link");
         $(this).addClass("selected_link");
@@ -149,63 +168,44 @@ $(function () {
         currentCountryName = $(this).attr("na");
         currentCountry = country;
         $('#currentCountry').text(currentCountryName);
-        changeUrl();
-        $.getJSON("/static/data/" + country + ".js", function (data) {
-            dat = data;
-            var p2 = generatePath(paper, dat[currentYear]['M'], dat[currentYear]['F']);
+        $.getJSON("/static/data/generated/" + country + ".json", function (data) {
+            currentCountryData = data;
+            var p2 = generatePath( );
             c.animate({path:p2}, 1000);
         });
     });
 
-
-    $(".alpha_link").click(function (event) {
+    $("#alpha_list_div ul").on("click", "a", function (event) {
         event.preventDefault();
         $(".alpha_link").removeClass("selected_link");
         $(this).addClass("selected_link");
 
         var letter = $(this).attr("id");
         currentLetter = letter;
-        $('#country_list').hide(300, function () {
-            var i;
-            $("#country_list").empty();
-            $("#country_list").height(0);
-            $(".country_link").remove();
+        $('#country_list').hide();
+        var i;
+        $("#country_list").empty();
+        $("#country_list").height(0);
+        $(".country_link").remove();
 
-            var country_list = lettersToCountriesList[letter];
-            var country_count = country_list.length;
-            for (i = 0; i < country_count; i++) {
-                var humanName = countriesHumanNames[country_list[i]];
-                $("#country_list").append('<li><a class="country_link" href="" id="' + country_list[i] + '">' + humanName + "</a></li>");
-            }
+        var country_list = lettersToCountriesList[letter];
+        var country_count = country_list.length;
+        for (i = 0; i < country_count; i++) {
+            var humanName = countriesHumanNames[country_list[i]];
+            $("#country_list").append('<li><a class="country_link" href="" id="' + country_list[i] + '">' + humanName + "</a></li>");
+        }
+        $('#country_list').show(300);
 
-            $(".country_link").click(function (event) {
-                event.preventDefault();
-                $(".country_link").removeClass("selected_link");
-                $(this).addClass("selected_link");
-                var country = $(this).attr("id");
-                currentCountryName = $(this).attr("na");
-                currentCountry = country;
-                $('#currentCountry').text(currentCountryName);
-                changeUrl();
-                $.getJSON("/static/data/" + country + ".js", function (data) {
-                    dat = data;
-                    var p2 = generatePath(paper, dat[currentYear]['M'], dat[currentYear]['F']);
-                    c.animate({path:p2}, 1000);
-                });
-            });
-            $('#country_list').show(300);
-        });
     });
 
-    $("#year_list_div ul").on("click", "li", function(event){
+    $("#year_list_div ul").on("click", "a", function (event) {
         $(".year_link").removeClass("selected_link");
         $(this).addClass("selected_link");
         event.preventDefault();
         var year = $(this).attr("id");
         currentYear = year;
         $('#currentYear').text(year);
-       // var p2 = generatePath(paper, dat[currentYear]['M'], dat[currentYear]['F']);
-        //c.animate({path:p2}, 1000);
-        //changeUrl();
+        var p2 = generatePath( );
+        c.animate({path:p2}, 1000);
     });
 });

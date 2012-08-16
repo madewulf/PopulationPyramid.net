@@ -106,7 +106,7 @@
         <div id="country_list_div" class="nav_links_div">
             <ul id="country_list">
                 {% for country_t in country_tuples%}
-                <li></li><a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a><li>
+                <li><a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a><li>
                 {% endfor %}
             </ul>
         </div>
