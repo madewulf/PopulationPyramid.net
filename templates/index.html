@@ -20,10 +20,14 @@
     <META name="description"
           content="Visualization of the population pyramids of the world, based on the United Nations data."/>
     <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
+
+
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400italic|Prata' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
+    <link type="text/css" href="/static/jquery-ui/css/custom-theme/jquery-ui-1.8.23.custom.css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/raphael.js"></script>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui/js/jquery-ui-1.8.23.custom.min.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -85,6 +89,13 @@
         <div id="canvas_container_div">
             <div id="canvas_container"></div>
         </div>
+        <div id="right_content_div" style="float:left;width:520px;">
+            <div style="width:400px;height:40px">
+            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width:400px;margin-left:20px; ">
+                 <div class="ui-slider-range ui-widget-header" style="left: 12%; width: 77%; "></div>
+                 <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 12%; "></a>
+             </div>
+            </div>
         <div id="curve_div">
             <div id="canvas_container2"></div>
         </div>
@@ -111,6 +122,7 @@
                 <li><a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a><li>
                 {% endfor %}
             </ul>
+        </div>
         </div>
     </div>
     <!--<div id="link">

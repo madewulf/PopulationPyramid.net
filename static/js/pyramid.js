@@ -166,11 +166,17 @@ function drawPopulationCurve()
     var spacing = useableWidth/(l);
 
     /*axes drawing*/
-    var axesPath = "M " + curvePadding + " " + (curvePadding + useableHeight) + "H" +  (curvePadding*2 + useableWidth);// horizontal axis
-    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding) + " " + ((curvePadding + useableHeight) -curvePadding) + "L" + (curvePadding*2 + useableWidth) + ' ' + (curvePadding + useableHeight) ;
-    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding) + " " + ((curvePadding + useableHeight) +curvePadding) + "L" + (curvePadding*2 + useableWidth) + ' ' + (useableHeight + curvePadding) ;
-
+    //first horizontal axis
+    var axesPath = "M " + curvePadding + " " + (curvePadding + useableHeight) + "H" +  (curvePadding*2 + useableWidth);
+    //with arrow
+    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding-1) + " " + ((curvePadding + useableHeight) -curvePadding) + "L" + (curvePadding*2 + useableWidth-1) + ' ' + (curvePadding + useableHeight) ;
+    axesPath += "M "+   ((curvePadding *2+ useableWidth)- curvePadding-1) + " " + ((curvePadding + useableHeight) +curvePadding) + "L" + (curvePadding*2 + useableWidth-1) + ' ' + (useableHeight + curvePadding) ;
+    //then vertical axis
     axesPath += "M " + curvePadding + " " + curvePadding + "V "+ (curvePadding + useableHeight); // vertical axis
+    //with arrow
+    axesPath += "M "+  0 + " " + (2*curvePadding +1) + "L" +curvePadding + ' ' + (curvePadding + 1) ;
+    axesPath += "M "+  2*curvePadding + " " + (2*curvePadding +1) + "L" + curvePadding+ ' ' + (curvePadding + 1) ;
+
     axes = paper2.path(axesPath);
     axes.attr({stroke:'#07669d', 'stroke-width':1});
     /*cross drawing*/
@@ -179,7 +185,6 @@ function drawPopulationCurve()
        y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
        x = index*spacing + curvePadding;
        var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
-       console.log("crosspath" + crossPath);
        if (cross )
            cross.remove();
        cross = paper2.path(crossPath);
@@ -275,5 +280,7 @@ $(function () {
         $('#country_list').show(300);
 
     });
+
+    $("#slider").slider();
 
 });
