@@ -78,12 +78,12 @@ a:hover {color:#D156BF;}  /* mouse over link */
 a:active {color:#D156BF;}  /* selected link */
 
 #canvas_container {
-    width: 420px;
+    width: 450px;
 
 }
 
 #canvas_container2 {
-    width: 520px;
+    width: 480px;
     padding-bottom:10px;
 
 }
@@ -100,14 +100,13 @@ a:active {color:#D156BF;}  /* selected link */
 #canvas_container_div
 {
     float:left;
-    width:420px;
+    width:450px;
 }
 
 #curve_div
 {
     float:left;
     width:520px;
-    margin:0 0 0 20px;
 }
 #year_list_div
 {
@@ -117,24 +116,6 @@ a:active {color:#D156BF;}  /* selected link */
     text-align: center;
 }
 
-#alpha_list_div
-{
-    float:left;
-    margin: 0 20px 0 20px;
-    padding: 0 20px 0 20px;
-    width:30px;
-    text-align: center;
-    border-left: dotted 1px #eeeeee;
-    border-right: dotted 1px #eeeeee;
-}
-
-#country_list_div
-{
-    float:left;
-    padding: 0 0 0 0px;
-    width : 298px;
-
-}
 #link {
     display:hidden;
 }
@@ -160,9 +141,6 @@ a.selected_link
     text-decoration: none;
     padding: 1px 2px;
     margin: 0px -2px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 
     text-align: center;
 }
@@ -191,7 +169,78 @@ a.selected_link
          -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
 }
 
-.year_div_box
+.year_div
 {
-    width:12px;height:60px;float:left; line-height: 12px;font-family: arial;
+    padding:1px;
+    width:13px;
+    height:60px;
+    float:left;
+    font-size:12px;
+    font-family: courier;
+}
+
+#right_content_div
+{
+    float:left;
+    width:490px;
+    margin-left:20px;
+}
+
+#years
+{
+    width:520px;
+    height:40px;
+    margin-top:-15px;
+    float:left;
+    padding-bottom:10px;
+}
+
+#countriesTabs
+{
+    margin-top:10px;
+    height:35px;
+}
+
+h3
+{
+   font-size: 1.2em;
+   padding-bottom:10px;
+}
+
+.alphaTab
+{
+    list-style: none;
+    float:left;
+    color:white;
+    width:17px;
+    height:19px;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: white;
+    border:#d3d3d3 1px solid;
+    padding-top:2px;
+}
+
+.alphaTab a
+{
+    color:#07669d;
+}
+
+.alphaTab.selectedTab
+{
+
+    background-color: white;
+    border:#d3d3d3 1px solid;
+    border-bottom: none;
+}
+.alphaTab.selectedTab a
+{
+    color:#07669d;
+}
+
+#countries
+{
+    clear:both;
+    width:475px;
 }

@@ -1,6 +1,6 @@
-var canvas_size = 420,
+var canvas_size = 450,
     multiplier = 5,
-    curveWidth = 455,
+    curveWidth = 477,
     curveHeight = 100,
     c,
     curve,
@@ -258,24 +258,11 @@ $(function () {
         changePyramidInfo();
     });*/
 
-    $("#slider").slider({
-        'max':2100,
-        'min':1950,
-        "step":5,
-        "value":currentYear
-    });
-
-    $("#slider").bind("slide", function(event, ui){
-
-        var value = $( this ).slider( "option", "value" );
-        currentYear= value;
-        $('#currentYear').text(currentYear);
-        var p2 = generatePath( );
-        c.animate({path:p2}, 10);
-        changePyramidInfo();
-    });
 
     $("#year_list_div").hide();
-    $('#countriesTabs').tabs();
+
+    $(".countryList").hide();
+    $("#tabs-S").show();
+
 
 });

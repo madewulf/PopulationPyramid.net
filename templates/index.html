@@ -24,10 +24,8 @@
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400italic|Prata' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
-    <link type="text/css" href="/static/jquery-ui/css/custom-theme/jquery-ui-1.8.23.custom.css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/raphael.js"></script>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
-    <script type="text/javascript" src="/static/jquery-ui/js/jquery-ui-1.8.23.custom.min.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -59,8 +57,8 @@
 
     <div style="width:960px; margin:auto;">
         <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2100: </h1>
-        <div style="float:right; margin-top:-19px;"><g:plusone size="medium" annotation="inline" width="120" href="http://populationpyramid.net"></g:plusone>
-        </div>
+        <!--<div style="float:right; margin-top:-19px;"><g:plusone size="medium" annotation="inline" width="120" href="http://populationpyramid.net"></g:plusone>
+        </div>-->
         <div style="float:right; margin-top:-19px;"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpopulationpyramid.net&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=20&amp;appId=205567582820738" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe></div>
         <p style="float:right; margin-top:-17px; margin-right:10px; color:#66A7CC; font-size:0.8em;">Soon on iPad as part of the <a href="http://movingworldapp.com" style="color:#66A7CC;text-decoration: underline; ">Moving World App</a></p>
     </div>
@@ -73,7 +71,7 @@
             <span id="currentCountry">{{currentCountryName}}</span>
         </h2>
 
-        <div style="width:420px;">
+        <div style="width:450px;">
             <h2 style="float:left; ">
                 <span id="currentYear">2010</span>
             </h2>
@@ -89,46 +87,37 @@
         <div id="canvas_container_div">
             <div id="canvas_container"></div>
         </div>
-        <div id="right_content_div" style="float:left;width:520px;">
-            <div style="width:400px;height:40px">
-
-           <!-- <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width:400px;margin-left:20px; ">
-                 <div class="ui-slider-range ui-widget-header" style="left: 12%; width: 77%; "></div>
-                 <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 12%; "></a>
-             </div>-->
-            </div>
+        <div id="right_content_div">
+        <h3>Pick a Year:</h3>
         <div id="curve_div">
             <div id="canvas_container2"></div>
         </div>
-        <div id="years" style="width:440px;height:40px; margin-top:-10px; padding-left:23px;">
+        <div id="years">
                 {% for year in years %}
-                <div class="year_div box_rotate" style="padding:1px;width:12px;height:60px;float:left; font-size:12px; font-family: courier;">
-                    <a href="">{{year}}</a>
+                <div class="year_div box_rotate">
+                    <a class="year_link {% if year == 2010 %} selected_link {%endif%} " href="/{{currentCountry}}/{{year}}" id="{{year}}">{{year}}</a>
                 </div>
                 {%endfor%}
         </div>
-        <div id="year_list_div" class="nav_links_div" style="text-align: center;">
-            <ul id="year_list">
-                {% for year in years %}
-                <li><a class="year_link" href="/{{currentCountry}}/{{year}}" id="{{year}}">{{year}}</a></li>
-                {%endfor%}
-            </ul>
-        </div>
+        <h3>Pick a Country:</h3>
 
         <div id="countriesTabs" style="clear:both;">
             <ul>
                 {%for letter in alphabet %}
-                <li><a href="#tabs-{{letter}}">{{letter}}</a></li>
+                <li class="alphaTab {% if letter == 'S' %} selectedTab {%endif%} "><a href="#tabs-{{letter}}">{{letter}}</a></li>
                 {%endfor %}
             </ul>
+        </div>
+        <div id="countries">
             {% for big_tuple in countries_lists %}
-            <div id="tabs-{{big_tuple.0}}">
+            <div class="countryList" id="tabs-{{big_tuple.0}}">
                 {% for country_t in big_tuple.1%}
                     <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a> -
                 {%endfor%}
             </div>
             {%endfor%}
         </div>
+
 
 
         </div> <!-- closing right content div-->

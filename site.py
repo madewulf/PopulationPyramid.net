@@ -27,6 +27,7 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
             currentLetter = currentCountryName[0]
         alphabet = map(chr, range(97, 123))
         alphabet.remove('x')
+        alphabet = map(lambda x:x.upper(),alphabet)
         countries_lists  =[]
         for letter in alphabet:
             country_list = letters_to_countries_list_dict[letter.upper()]
@@ -35,8 +36,6 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
                 country_tuples.append((c,unicode(countries_dict[c])))
             big_tuple = (letter,country_tuples)
             countries_lists.append(big_tuple)
-        years = map(str,years)
-        print years
         return  render_template("index.html",
                             currentCountry=country,
                             currentCountryName=currentCountryName,
