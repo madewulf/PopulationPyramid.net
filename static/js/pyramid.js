@@ -261,8 +261,13 @@ $(function () {
 
     $("#year_list_div").hide();
 
-    $(".countryList").hide();
-    $("#tabs-S").show();
+    $(".alphaTab a").click(function(event)
+    {
+        event.preventDefault();
+        var tabsToShow= $(this).attr("href");
+        $(".countryList").hide();
+        $(tabsToShow).show();
+    });
 
 
 });

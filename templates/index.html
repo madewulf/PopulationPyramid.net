@@ -112,7 +112,9 @@
             {% for big_tuple in countries_lists %}
             <div class="countryList" id="tabs-{{big_tuple.0}}">
                 {% for country_t in big_tuple.1%}
-                    <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a> -
+                    <div class="countryNameDiv">
+                        <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a>
+                    </div>
                 {%endfor%}
             </div>
             {%endfor%}

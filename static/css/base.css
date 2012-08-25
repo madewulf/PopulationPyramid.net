@@ -212,13 +212,10 @@ h3
     list-style: none;
     float:left;
     color:white;
-    width:17px;
+    width:19px;
     height:19px;
     text-align: center;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: white;
-    border:#d3d3d3 1px solid;
+    font-size:0.8em;
     padding-top:2px;
 }
 
@@ -230,17 +227,22 @@ h3
 .alphaTab.selectedTab
 {
 
-    background-color: white;
-    border:#d3d3d3 1px solid;
-    border-bottom: none;
+    background-color: #07669d;
+    border-radius: 5px;
 }
 .alphaTab.selectedTab a
 {
-    color:#07669d;
+    color:white;
 }
 
 #countries
 {
     clear:both;
     width:475px;
+}
+
+.countryNameDiv
+{
+    float:left;
+    width:237px;
 }
