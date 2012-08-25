@@ -19,25 +19,32 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
     f.close()
     currentCountryName = countries_dict.get(country,None)
 
-    print "country", country
+
     if currentCountryName is None:
         return make_response(render_template('404.html'), 404)
     else :
         if (currentLetter is None):
             currentLetter = currentCountryName[0]
-        country_list = letters_to_countries_list_dict[currentLetter.upper()]
-        country_tuples = []
-        for c in country_list:
-            country_tuples.append((c,countries_dict[c]))
-        print country, currentCountryName, year, currentLetter
+        alphabet = map(chr, range(97, 123))
+        alphabet.remove('x')
+        countries_lists  =[]
+        for letter in alphabet:
+            country_list = letters_to_countries_list_dict[letter.upper()]
+            country_tuples = []
+            for c in country_list:
+                country_tuples.append((c,unicode(countries_dict[c])))
+            big_tuple = (letter,country_tuples)
+            countries_lists.append(big_tuple)
+        years = map(str,years)
+        print years
         return  render_template("index.html",
                             currentCountry=country,
                             currentCountryName=currentCountryName,
                             currentYear=year,
                             currentLetter = currentLetter,
-                            country_tuples= country_tuples,
                             years = years,
-                            alphabet = alphabet
+                            alphabet = alphabet,
+                            countries_lists = countries_lists
                             )
 
 

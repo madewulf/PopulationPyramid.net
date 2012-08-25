@@ -21,7 +21,7 @@ files = {
 f = lambda: defaultdict(f)
 res_dict = defaultdict(f)
 year_set = set()
-
+print u"qmsdlkjqmslkjfçççç"
 countries_dict = {}
 count =0
 for sex in files:
@@ -32,7 +32,9 @@ for sex in files:
             if (year % 5== 0):
                 year_set.add(year)
                 country = row[2]
-                encoded_country =  urllib.quote_plus(country.decode('ascii','ignore'))
+
+                country = unicode(country, "utf-8")
+                encoded_country =  urllib.quote_plus(country.encode('utf-8','ignore'))
                 countries_dict[encoded_country]=country
                 i=0
                 for v in row[6:22]+row[23:]:

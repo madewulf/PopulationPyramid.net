@@ -182,3 +182,16 @@ a.selected_link
 
     text-decoration: underline;
 }
+
+.box_rotate {
+     -moz-transform: rotate(7.5deg);  /* FF3.5+ */
+       -o-transform: rotate(7.5deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(45deg);  /* Saf3.1+, Chrome */
+             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+}
+
+.year_div_box
+{
+    width:12px;height:60px;float:left; line-height: 12px;font-family: arial;
+}

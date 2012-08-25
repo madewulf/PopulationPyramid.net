@@ -1,6 +1,6 @@
 var canvas_size = 420,
     multiplier = 5,
-    curveWidth = 400,
+    curveWidth = 455,
     curveHeight = 100,
     c,
     curve,
@@ -246,7 +246,7 @@ $(function () {
 
 
 
-    $("#year_list_div ul").on("click", "a", function (event) {
+  /*  $("#year_list_div ul").on("click", "a", function (event) {
         $(".year_link").removeClass("selected_link");
         $(this).addClass("selected_link");
         event.preventDefault();
@@ -256,30 +256,7 @@ $(function () {
         var p2 = generatePath( );
         c.animate({path:p2}, 1000);
         changePyramidInfo();
-    });
-
-    $("#alpha_list_div ul").on("click", "a", function (event) {
-        event.preventDefault();
-        $(".alpha_link").removeClass("selected_link");
-        $(this).addClass("selected_link");
-
-        var letter = $(this).attr("id");
-        currentLetter = letter;
-        $('#country_list').hide();
-        var i;
-        $("#country_list").empty();
-        $("#country_list").height(0);
-        $(".country_link").remove();
-
-        var country_list = lettersToCountriesList[letter];
-        var country_count = country_list.length;
-        for (i = 0; i < country_count; i++) {
-            var humanName = countriesHumanNames[country_list[i]];
-            $("#country_list").append('<li><a class="country_link" href="" id="' + country_list[i] + '">' + humanName + "</a></li>");
-        }
-        $('#country_list').show(300);
-
-    });
+    });*/
 
     $("#slider").slider({
         'max':2100,
@@ -287,7 +264,7 @@ $(function () {
         "step":5,
         "value":currentYear
     });
-    
+
     $("#slider").bind("slide", function(event, ui){
 
         var value = $( this ).slider( "option", "value" );
@@ -297,4 +274,8 @@ $(function () {
         c.animate({path:p2}, 10);
         changePyramidInfo();
     });
+
+    $("#year_list_div").hide();
+    $('#countriesTabs').tabs();
+
 });

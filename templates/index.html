@@ -91,13 +91,21 @@
         </div>
         <div id="right_content_div" style="float:left;width:520px;">
             <div style="width:400px;height:40px">
-            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width:400px;margin-left:20px; ">
+
+           <!-- <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" style="width:400px;margin-left:20px; ">
                  <div class="ui-slider-range ui-widget-header" style="left: 12%; width: 77%; "></div>
                  <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 12%; "></a>
-             </div>
+             </div>-->
             </div>
         <div id="curve_div">
             <div id="canvas_container2"></div>
+        </div>
+        <div id="years" style="width:440px;height:40px; margin-top:-10px; padding-left:23px;">
+                {% for year in years %}
+                <div class="year_div box_rotate" style="padding:1px;width:12px;height:60px;float:left; font-size:12px; font-family: courier;">
+                    <a href="">{{year}}</a>
+                </div>
+                {%endfor%}
         </div>
         <div id="year_list_div" class="nav_links_div" style="text-align: center;">
             <ul id="year_list">
@@ -107,23 +115,23 @@
             </ul>
         </div>
 
-        <div id="alpha_list_div" class="nav_links_div" style="text-align: center;">
-            <ul id="alpha_list">
-                {% for char in alphabet %}
-                   <li><a class="alpha_link" href="/{{currentCountry}}/{{currentYear}}/{{char}}" id="{{char}}">{{char}} </a></li>
+        <div id="countriesTabs" style="clear:both;">
+            <ul>
+                {%for letter in alphabet %}
+                <li><a href="#tabs-{{letter}}">{{letter}}</a></li>
+                {%endfor %}
+            </ul>
+            {% for big_tuple in countries_lists %}
+            <div id="tabs-{{big_tuple.0}}">
+                {% for country_t in big_tuple.1%}
+                    <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a> -
                 {%endfor%}
-
-            </ul>
+            </div>
+            {%endfor%}
         </div>
 
-        <div id="country_list_div" class="nav_links_div">
-            <ul id="country_list">
-                {% for country_t in country_tuples%}
-                <li><a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a><li>
-                {% endfor %}
-            </ul>
-        </div>
-        </div>
+
+        </div> <!-- closing right content div-->
     </div>
     <!--<div id="link">
         <div id="url_div">
