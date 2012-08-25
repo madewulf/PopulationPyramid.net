@@ -281,6 +281,20 @@ $(function () {
 
     });
 
-    $("#slider").slider();
+    $("#slider").slider({
+        'max':2100,
+        'min':1950,
+        "step":5,
+        "value":currentYear
+    });
+    
+    $("#slider").bind("slide", function(event, ui){
 
+        var value = $( this ).slider( "option", "value" );
+        currentYear= value;
+        $('#currentYear').text(currentYear);
+        var p2 = generatePath( );
+        c.animate({path:p2}, 10);
+        changePyramidInfo();
+    });
 });
