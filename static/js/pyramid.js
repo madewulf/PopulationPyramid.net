@@ -17,6 +17,12 @@ var canvas_size = 450,
     cross,
     axes;
 
+/*variables used for the population size graph*/
+var curvePadding;
+var useableWidth ;
+var useableHeight;
+var spanP;
+var spacing;
 
 function getUrlVars() {
     var vars = [], hash;
@@ -140,19 +146,95 @@ function changePyramidInfo()
 {
     setLabels();
     changeUrl();
-    drawPopulationCurve();
+    initPopulationCurve();
+}
+
+function getHoverHandler(rect)
+{
+    return function(event)
+          {
+             //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
+              var year =  $(rect.node).attr("year")
+              drawCrossOnPopGraph(year);
+              console.log(year);
+             $("#"+year).addClass("selected_link");
+          }
+}
+
+function getMouseoutHandler(rect)
+{
+    return function(event)
+          {
+              drawCrossOnPopGraph(currentYear);
+              var year = $(rect.node).attr("year");
+
+              if (year!=currentYear)
+                $("#"+year).removeClass("selected_link");
+          }
+}
+
+function getClickHandler(rect)
+{
+    return function(event)
+            {
+               currentYear = $(rect.node).attr("year");
+
+                $('#currentYear').text(year);
+                var p2 = generatePath( );
+                c.animate({path:p2}, 1000);
+                changePyramidInfo();
+            }
+}
+
+function drawCrossOnPopGraph (year)
+{
+      /*cross drawing*/
+    var currentPopValue = populations[currentCountry][year];
+       var index = (year - 1945)/5;
+       var y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
+       x = index*spacing + curvePadding;
+       var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
+       if (cross )
+           cross.remove();
+       cross = paper2.path(crossPath);
+       cross.attr({stroke:'#07669d', 'stroke-width':1,'stroke-opacity':'0.2','stroke-dasharray': "-"});
+
+
 }
 
 function drawPopulationCurve()
 {
-    var curveString = "";
+
     var l = years.length;
-    var minP=20000000;
+    var curveString = "";
+    for (var i=0;i<l;i++)
+    {
+        year = years[i];
+        var popValue = populations[currentCountry][year];
+        var y = (1- ((popValue) /spanP))*useableHeight +curvePadding ;
+        var x = (i+1)*spacing + curvePadding;
+        if (i==0)
+            curveString +="M";
+        else
+            curveString +="L";
+        curveString += x +" " + y;
+    }
+    if (curve)
+        curve.remove();
+    curve = paper2.path(curveString);
+    curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
+}
+
+function initPopulationCurve()
+{
+
+    var l = years.length;
+    var minP = 20000000;
     var maxP = 0 ;
     var year, x, y;
-    var curvePadding = 3;
-    var useableWidth = curveWidth -curvePadding*2;
-    var useableHeight = curveHeight -curvePadding*2;
+    curvePadding = 3;
+    useableWidth = curveWidth -curvePadding*2;
+    useableHeight = curveHeight -curvePadding*2;
     for (var i=0;i<l;i++)
     {
         year = years[i];
@@ -162,8 +244,8 @@ function drawPopulationCurve()
         if (currentVal > maxP)
             maxP = currentVal;
     }
-    var spanP = maxP ;
-    var spacing = useableWidth/(l);
+    spanP = maxP ;
+    spacing = useableWidth/(l);
 
     /*axes drawing*/
     //first horizontal axis
@@ -179,36 +261,27 @@ function drawPopulationCurve()
 
     axes = paper2.path(axesPath);
     axes.attr({stroke:'#07669d', 'stroke-width':1});
-    /*cross drawing*/
-    var currentPopValue = populations[currentCountry][currentYear];
-       var index = (currentYear - 1945)/5;
-       y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
-       x = index*spacing + curvePadding;
-       var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
-       if (cross )
-           cross.remove();
-       cross = paper2.path(crossPath);
-       cross.attr({stroke:'#07669d', 'stroke-width':1,'stroke-opacity':'0.2','stroke-dasharray': "-"});
 
-    /*curve drawing*/
+
+    drawCrossOnPopGraph(currentYear);
+    drawPopulationCurve();
+    /*click zones*/
     for (var i=0;i<l;i++)
     {
         year = years[i];
-        var popValue = populations[currentCountry][year];
-        y = (1- ((popValue) /spanP))*useableHeight +curvePadding ;
-        x = (i+1)*spacing + curvePadding;
-        if (i==0)
-            curveString +="M";
-        else
-            curveString +="L";
-        curveString += x +" " + y;
+
+
+        x = (i+1/2)*spacing + curvePadding;
+
+       var rect =  paper2.rect(x,0,spacing, curveHeight);
+       rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
+       $(rect.node).attr("year",year);
+      $(rect.node).hover(getHoverHandler(rect));
+      $(rect.node).click(getClickHandler(rect));
+      $(rect.node).mouseout(getMouseoutHandler(rect));
     }
 
 
-    if (curve)
-        curve.remove();
-    curve = paper2.path(curveString);
-    curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
 }
 $(function () {
     $.getJSON("/static/data/mainData.json", function (mainData) {

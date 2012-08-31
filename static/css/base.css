@@ -199,6 +199,7 @@ a.selected_link
 {
     margin-top:10px;
     height:35px;
+    margin-left:-4px;
 }
 
 h3
@@ -213,7 +214,7 @@ h3
     float:left;
     color:white;
     width:19px;
-    height:19px;
+    height:18px;
     text-align: center;
     font-size:0.8em;
     padding-top:2px;
@@ -245,4 +246,6 @@ h3
 {
     float:left;
     width:237px;
+    line-height: 1.2em;
+    font-size: 0.8em;
 }
