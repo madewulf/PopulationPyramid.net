@@ -24,17 +24,6 @@ var useableHeight;
 var spanP;
 var spacing;
 
-function getUrlVars() {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    var i = 0;
-    for (i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
-}
 
 function generatePath()
 {
@@ -67,16 +56,6 @@ function generatePath()
 
     return pathString;
 
-}
-
-function keys(obj) {
-    var keysList = [];
-    var key;
-    for (key in obj) {
-        keysList.push(key);
-    }
-
-    return keysList;
 }
 
 window.onpopstate = function (event) {
@@ -120,7 +99,7 @@ function drawAxes() {
 
 function setLabels()
 {
-    $('#current_year').text(currentYear);
+    $('#currentYear').text(currentYear);
     currentCountryName = countriesHumanNames[currentCountry];
     $("#currentCountry").text(currentCountryName);
     var pop = populations[currentCountry][currentYear]*1000+'';
@@ -156,7 +135,6 @@ function getHoverHandler(rect)
              //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
               var year =  $(rect.node).attr("year")
               drawCrossOnPopGraph(year);
-              console.log(year);
              $("#"+year).addClass("selected_link");
           }
 }
@@ -177,8 +155,9 @@ function getClickHandler(rect)
 {
     return function(event)
             {
-               currentYear = $(rect.node).attr("year");
-
+                currentYear = $(rect.node).attr("year");
+                $(".year_link").removeClass("selected_link");
+                $("#"+currentYear).addClass("selected_link");
                 $('#currentYear').text(year);
                 var p2 = generatePath( );
                 c.animate({path:p2}, 1000);
@@ -188,7 +167,6 @@ function getClickHandler(rect)
 
 function drawCrossOnPopGraph (year)
 {
-      /*cross drawing*/
     var currentPopValue = populations[currentCountry][year];
        var index = (year - 1945)/5;
        var y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
@@ -198,13 +176,10 @@ function drawCrossOnPopGraph (year)
            cross.remove();
        cross = paper2.path(crossPath);
        cross.attr({stroke:'#07669d', 'stroke-width':1,'stroke-opacity':'0.2','stroke-dasharray': "-"});
-
-
 }
 
 function drawPopulationCurve()
 {
-
     var l = years.length;
     var curveString = "";
     for (var i=0;i<l;i++)
@@ -224,6 +199,7 @@ function drawPopulationCurve()
     curve = paper2.path(curveString);
     curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
 }
+
 
 function initPopulationCurve()
 {
@@ -269,21 +245,19 @@ function initPopulationCurve()
     for (var i=0;i<l;i++)
     {
         year = years[i];
-
-
         x = (i+1/2)*spacing + curvePadding;
-
-       var rect =  paper2.rect(x,0,spacing, curveHeight);
+       var rect =  paper2.rect(x,0,spacing, curveHeight+20);
        rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
        $(rect.node).attr("year",year);
-      $(rect.node).hover(getHoverHandler(rect));
-      $(rect.node).click(getClickHandler(rect));
-      $(rect.node).mouseout(getMouseoutHandler(rect));
+       $(rect.node).hover(getHoverHandler(rect));
+       $(rect.node).click(getClickHandler(rect));
+       $(rect.node).mouseout(getMouseoutHandler(rect));
     }
 
 
 }
 $(function () {
+    $(".countryList").hide();
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,
             lettersToCountriesList = mainData.lettersToCountriesList,
@@ -292,13 +266,16 @@ $(function () {
             countriesHumanNames = mainData.countriesHumanNames,
             ageLabels = mainData.ageLabels;
         drawAxes();
+
         paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                   currentCountryData = data;
                   var p1 = generatePath( );
                   c = paper.path(p1);
                   c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
-                  changePyramidInfo();
+                  initPopulationCurve();
+                  setLabels();
+                  $('#tabs-'+currentLetter).show();
               });
     });
 
@@ -317,30 +294,23 @@ $(function () {
         });
     });
 
-
-
-  /*  $("#year_list_div ul").on("click", "a", function (event) {
-        $(".year_link").removeClass("selected_link");
-        $(this).addClass("selected_link");
-        event.preventDefault();
-        var year = $(this).attr("id");
-        currentYear = year;
-        $('#currentYear').text(year);
-        var p2 = generatePath( );
-        c.animate({path:p2}, 1000);
-        changePyramidInfo();
-    });*/
-
-
-    $("#year_list_div").hide();
-
     $(".alphaTab a").click(function(event)
     {
         event.preventDefault();
         var tabsToShow= $(this).attr("href");
         $(".countryList").hide();
+        $(".alphaTab").removeClass("selectedTab");
+        $(this).parent().addClass("selectedTab");
         $(tabsToShow).show();
     });
 
+    $(".country_link").click(function (event) {
+           event.preventDefault();
+           currentCountry = $(this).attr("id");
+           console.log("country_link " + currentCountry);
+            var p2 = generatePath( );
+           c.animate({path:p2}, 1000);
+           changePyramidInfo();
 
+    });
 });

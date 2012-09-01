@@ -1,6 +1,6 @@
 <html itemscope itemtype="http://schema.org/">
 <head>
-    <title>{{currentCountryName}} - Population Pyramids of the Whole World - from 1950 to 2100 - PopulationPyramid.net</title>
+    <title>{{currentCountryName}} - {{currentYear}} - Population Pyramid</title>
     <!-- facebook open graphs tags-->
     <meta property="og:title" content="PopulationPyramid.net"/>
     <meta property="og:type" content="website"/>
@@ -73,7 +73,7 @@
 
         <div style="width:450px;">
             <h2 style="float:left; ">
-                <span id="currentYear">2010</span>
+                <span id="currentYear">{{currentYear}}</span>
             </h2>
 
             <h2 style="float:right;padding-bottom:0px;">
@@ -95,7 +95,7 @@
         <div id="years">
                 {% for year in years %}
                 <div class="year_div box_rotate">
-                    <a class="year_link {% if year == 2010 %} selected_link {%endif%} " href="/{{currentCountry}}/{{year}}" id="{{year}}">{{year}}</a>
+                    <a class="year_link {% if year == currentYear %} selected_link {%endif%} " href="/{{currentCountry}}/{{year}}" id="{{year}}">{{year}}</a>
                 </div>
                 {%endfor%}
         </div>
@@ -104,7 +104,7 @@
         <div id="countriesTabs" style="clear:both;">
             <ul>
                 {%for letter in alphabet %}
-                <li class="alphaTab {% if letter == 'S' %} selectedTab {%endif%} "><a href="#tabs-{{letter}}">{{letter}}</a></li>
+                <li class="alphaTab {% if letter == currentLetter %} selectedTab {%endif%} "><a href="#tabs-{{letter}}">{{letter}}</a></li>
                 {%endfor %}
             </ul>
         </div>
@@ -113,7 +113,7 @@
             <div class="countryList" id="tabs-{{big_tuple.0}}">
                 {% for country_t in big_tuple.1%}
                     <div class="countryNameDiv">
-                        <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}" na="Western Asia">{{country_t.1}}</a>
+                        <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}">{{country_t.1}}</a>
                     </div>
                 {%endfor%}
             </div>
