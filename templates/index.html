@@ -113,7 +113,7 @@
             <div class="countryList" id="tabs-{{big_tuple.0}}">
                 {% for country_t in big_tuple.1%}
                     <div class="countryNameDiv">
-                        <a class="country_link" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}">{{country_t.1}}</a>
+                        <a class="country_link {%if currentCountry == country_t.0 %}selected_link {%endif%}" href="/{{country_t.0}}/{{currentYear}}/" id="{{country_t.0}}">{{country_t.1}}</a>
                     </div>
                 {%endfor%}
             </div>

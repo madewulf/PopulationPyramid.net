@@ -166,6 +166,12 @@ function getClickHandler(rect)
             }
 }
 
+function updatePopGraph()
+{
+    drawPopulationCurve();
+    drawCrossOnPopGraph(currentYear);
+}
+
 function drawCrossOnPopGraph (year)
 {
     var currentPopValue = populations[currentCountry][year];
@@ -183,6 +189,19 @@ function drawPopulationCurve()
 {
     var l = years.length;
     var curveString = "";
+    var minP = 20000000;
+    var maxP = 0 ;
+       for (var i=0;i<l;i++)
+       {
+           year = years[i];
+           var currentVal =  populations[currentCountry][year];
+           if (currentVal < minP)
+               minP = currentVal;
+           if (currentVal > maxP)
+               maxP = currentVal;
+       }
+       spanP = maxP ;
+
     for (var i=0;i<l;i++)
     {
         year = years[i];
@@ -195,10 +214,13 @@ function drawPopulationCurve()
             curveString +="L";
         curveString += x +" " + y;
     }
-    if (curve)
-        curve.remove();
-    curve = paper2.path(curveString);
-    curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
+    if (!curve)
+    {
+        curve = paper2.path(curveString);
+        curve.attr({stroke:'#D156BF', 'stroke-width':2, 'stroke-linecap':'round'});
+    }
+    else
+     curve.animate({path:curveString}, 1000);
 }
 
 
@@ -206,22 +228,13 @@ function drawPopGraphCanvas()
 {
     paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
     var l = years.length;
-    var minP = 20000000;
-    var maxP = 0 ;
-    var year, x, y;
+
+
+    var year, x;
     curvePadding = 3;
     useableWidth = curveWidth -curvePadding*2;
     useableHeight = curveHeight -curvePadding*2;
-    for (var i=0;i<l;i++)
-    {
-        year = years[i];
-        var currentVal =  populations[currentCountry][year];
-        if (currentVal < minP)
-            minP = currentVal;
-        if (currentVal > maxP)
-            maxP = currentVal;
-    }
-    spanP = maxP ;
+
     spacing = useableWidth/(l);
 
     /*axes drawing*/
@@ -283,20 +296,6 @@ $(function () {
               });
     });
 
-    $("#country_list_div ul").on("click", 'a',function (event) {
-        event.preventDefault();
-        $(".country_link").removeClass("selected_link");
-        $(this).addClass("selected_link");
-        var country = $(this).attr("id");
-        currentCountry = country;
-        changePyramidInfo();
-        $.getJSON("/static/data/generated/" + country + ".json", function (data) {
-            currentCountryData = data;
-            var p2 = generatePath( );
-            c.animate({path:p2}, 1000);
-            changePyramidInfo();
-        });
-    });
 
     $(".alphaTab a").click(function(event)
     {
@@ -311,13 +310,15 @@ $(function () {
     $(".country_link").click(function (event) {
            event.preventDefault();
            currentCountry = $(this).attr("id");
-           console.log("country_link " + currentCountry);
+        $(".country_link").removeClass("selected_link");
+              $(this).addClass("selected_link");
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                          currentCountryData = data;
 
                        var p2 = generatePath( );
                         c.animate({path:p2}, 1000);
                         changePyramidInfo();
+                        updatePopGraph();
         });
     });
 });
