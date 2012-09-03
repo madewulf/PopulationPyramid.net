@@ -63,7 +63,7 @@ window.onpopstate = function (event) {
 };
 
 
-function drawAxes() {
+function drawPyramidCanvas() {
     paper = new Raphael(document.getElementById('canvas_container'), canvas_size, canvas_size);
 
     var male_rect = paper.rect(0, 0, canvas_size / 2, canvas_size);
@@ -125,7 +125,6 @@ function changePyramidInfo()
 {
     setLabels();
     changeUrl();
-    initPopulationCurve();
 }
 
 function getHoverHandler(rect)
@@ -135,7 +134,7 @@ function getHoverHandler(rect)
              //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
               var year =  $(rect.node).attr("year")
               drawCrossOnPopGraph(year);
-             $("#"+year).addClass("selected_link");
+             $("#"+year).addClass("temp_selected_link");
           }
 }
 
@@ -147,7 +146,7 @@ function getMouseoutHandler(rect)
               var year = $(rect.node).attr("year");
 
               if (year!=currentYear)
-                $("#"+year).removeClass("selected_link");
+                $("#"+year).removeClass("temp_selected_link");
           }
 }
 
@@ -155,7 +154,9 @@ function getClickHandler(rect)
 {
     return function(event)
             {
+                $("#"+currentYear).removeClass("temp_selected_link");
                 currentYear = $(rect.node).attr("year");
+
                 $(".year_link").removeClass("selected_link");
                 $("#"+currentYear).addClass("selected_link");
                 $('#currentYear').text(year);
@@ -201,9 +202,9 @@ function drawPopulationCurve()
 }
 
 
-function initPopulationCurve()
+function drawPopGraphCanvas()
 {
-
+    paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
     var l = years.length;
     var minP = 20000000;
     var maxP = 0 ;
@@ -239,8 +240,7 @@ function initPopulationCurve()
     axes.attr({stroke:'#07669d', 'stroke-width':1});
 
 
-    drawCrossOnPopGraph(currentYear);
-    drawPopulationCurve();
+
     /*click zones*/
     for (var i=0;i<l;i++)
     {
@@ -258,6 +258,7 @@ function initPopulationCurve()
 }
 $(function () {
     $(".countryList").hide();
+    $('#tabs-'+currentLetter).show();
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,
             lettersToCountriesList = mainData.lettersToCountriesList,
@@ -265,17 +266,20 @@ $(function () {
             years = mainData.years,
             countriesHumanNames = mainData.countriesHumanNames,
             ageLabels = mainData.ageLabels;
-        drawAxes();
+        drawPyramidCanvas();
+        drawPopGraphCanvas();
 
-        paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
+
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                   currentCountryData = data;
                   var p1 = generatePath( );
                   c = paper.path(p1);
                   c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
-                  initPopulationCurve();
+
+                  drawCrossOnPopGraph(currentYear);
+                  drawPopulationCurve();
                   setLabels();
-                  $('#tabs-'+currentLetter).show();
+
               });
     });
 
@@ -308,9 +312,12 @@ $(function () {
            event.preventDefault();
            currentCountry = $(this).attr("id");
            console.log("country_link " + currentCountry);
-            var p2 = generatePath( );
-           c.animate({path:p2}, 1000);
-           changePyramidInfo();
+        $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
+                         currentCountryData = data;
 
+                       var p2 = generatePath( );
+                        c.animate({path:p2}, 1000);
+                        changePyramidInfo();
+        });
     });
 });

@@ -145,6 +145,16 @@ a.selected_link
     text-align: center;
 }
 
+a.temp_selected_link
+{
+    color: #D156BF;
+    text-decoration: none;
+    padding: 1px 2px;
+    margin: 0px -2px;
+
+    text-align: center;
+}
+
 #pop_span
 {
     font-size: 15px;
