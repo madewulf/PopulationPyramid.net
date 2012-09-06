@@ -50,12 +50,9 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
+import os
 if __name__ == '__main__':
-    with app.test_request_context():
-        pass
-        #print url_for('/')
-        #print "url_for %s"% url_for('static', filename='css/base.css')
-        #print "pyramid %s"% url_for('pyramid', country='brol', year=2010)
-    app.debug = True
-    app.run()
+    if __name__ == '__main__':
+        # Bind to PORT if defined, otherwise default to 5000.
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port)
