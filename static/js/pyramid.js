@@ -24,6 +24,7 @@ var useableHeight;
 var spanP;
 var spacing;
 
+var pyramidLabelSet;
 
 function generatePath()
 {
@@ -77,8 +78,17 @@ function drawPyramidCanvas() {
         line = paper.path("M 0 " + height + "H  " + canvas_size);
         line.attr({stroke:'#fff', 'stroke-width':1});
         text = paper.text(15, height - 7, ageLabels[l - 1 - i]);
-        text.attr({stroke:'#fff'});
+        text.attr({fill:'#fff'});
 
+        var rect = paper.rect(0,height-h_increment,canvas_size,h_increment);
+
+        rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
+        $(rect.node).attr("index",l-i-1);
+        $(rect.node).hover(getHoverHandlerPyramid(rect));
+        $(rect.node).mouseout(function(event){
+            if (pyramidLabelSet)
+                pyramidLabelSet.remove();
+        });
     }
     var v_increment = canvas_size / 8;
     for (i = 1; i < 4; i++) {
@@ -89,10 +99,10 @@ function drawPyramidCanvas() {
 
         line = paper.path("M " + x2 + " " + canvas_size + "  V" + (canvas_size - 10));
         line.attr({stroke:'#fff', 'stroke-width':1});
-        text = paper.text(x1, canvas_size - 10, (i * 5) + "%");
-        text.attr({stroke:'#fff'});
-        text = paper.text(x2, canvas_size - 10, (i * 5) + "%");
-        text.attr({stroke:'#fff'});
+        text = paper.text(x1, canvas_size - 10, (i * 2.5) + "%");
+        text.attr({fill:'#fff',font: '10px Helvetica, Arial',});
+        text = paper.text(x2, canvas_size - 10, (i * 2.5) + "%");
+        text.attr({fill:'#fff',font: '10px Helvetica, Arial',});
     }
 }
 
@@ -126,6 +136,53 @@ function changePyramidInfo()
     setLabels();
     changeUrl();
 }
+
+function getHoverHandlerPyramid(rect)
+{
+    return function(event)
+          {
+             //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
+              var i =  $(rect.node).attr("index");
+              var
+                  h_increment = canvas_size / (22),
+
+                  male_value,
+                  female_value,
+                  totalPop = populations[currentCountry][currentYear];
+                  male_value = currentCountryData[currentYear]['male'][''+i]/totalPop;
+                  female_value = currentCountryData[currentYear]['female'][''+i]/totalPop;
+
+                  var x_female = Math.round(canvas_size / 2 - female_value* canvas_size * multiplier);
+                  var y_female = Math.round((21-i) * h_increment);
+                  var x_male = Math.round(canvas_size / 2 + male_value * canvas_size * multiplier);
+                  var y_male = Math.round((21 - i) * h_increment);
+
+                  var rf = paper.rect(x_female-41, y_female-10,40,20);
+                  rf.attr({stroke:"#07669d", fill:"#fff"});
+                  var textf = paper.text(x_female-21, y_female,(female_value*100).toFixed(1)+ "%");
+                  textf.attr({font: '10px Helvetica, Arial', fill: "#07669d"});
+
+                  var rm = paper.rect(x_male, y_male-10,40,20);
+                  rm.attr({stroke:"#07669d", fill:"#fff"});
+                  var textm = paper.text(x_male+21, y_male,(male_value*100).toFixed(1)+ "%");
+                  textm.attr({font: '10px Helvetica, Arial', fill: "#07669d"});
+
+
+                  //pyramidLabelSet.animate({'opacity':0},333);
+                  if (pyramidLabelSet)
+                      pyramidLabelSet.remove();
+                  pyramidLabelSet= paper.set();
+
+                  pyramidLabelSet.push(rf);
+                  pyramidLabelSet.push(textf);
+                  pyramidLabelSet.push(rm);
+                  pyramidLabelSet.push(textm);
+                  pyramidLabelSet.attr({'opacity':0});
+                  pyramidLabelSet.animate({'opacity':1},100);
+          }
+}
+
+
 
 function getHoverHandler(rect)
 {
@@ -292,7 +349,6 @@ $(function () {
                   drawCrossOnPopGraph(currentYear);
                   drawPopulationCurve();
                   setLabels();
-
               });
     });
 
