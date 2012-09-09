@@ -1,6 +1,6 @@
 var canvas_size = 450,
     multiplier = 5,
-    curveWidth = 477,
+    curveWidth = 452,
     curveHeight = 100,
     c,
     curve,
@@ -131,7 +131,9 @@ function changeUrl() {
     _gaq.push(['_trackEvent', 'country', currentCountry]);
     _gaq.push(['_trackEvent', 'year', currentYear + ""]);
     _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
-    history.pushState({"coucou":"coucou"}, "", "/" + currentCountry + "/" + currentYear);
+    if (history.pushState())
+        history.pushState({"coucou":"coucou"}, "", "/" + currentCountry + "/" + currentYear);
+
 }
 
 function changePyramidInfo()
@@ -142,7 +144,6 @@ function changePyramidInfo()
 
 function drawPyramidLabel(x,y,arrowPointingLeft)
 {
-
     var path = [];
     var m = arrowPointingLeft? 1:-1;
     path = path.concat(["M ", x+m*5,y-10, "H", x+m*40 ]);
@@ -189,6 +190,8 @@ function getHoverHandlerPyramid(rect)
                   var textm = paper.text(x_male+24, y_male,(male_value*100).toFixed(1)+ "%");
                   textm.attr({font: '10px Helvetica, Arial', fill: "#07669d"});
 
+                  var cm = paper.circle(x_male,y_male,2);
+                  cm.attr({ fill: "#fff",stroke:"#fff"});
 
                   //pyramidLabelSet.animate({'opacity':0},333);
                   if (pyramidLabelSet)
@@ -199,6 +202,7 @@ function getHoverHandlerPyramid(rect)
                   pyramidLabelSet.push(cf);
                   pyramidLabelSet.push(textf);
                   pyramidLabelSet.push(rm);
+                  pyramidLabelSet.push(cm);
                   pyramidLabelSet.push(textm);
                   pyramidClickZones.toFront();
                   //pyramidLabelSet.attr({'opacity':0});
@@ -308,7 +312,7 @@ function drawPopulationCurve()
 
 function drawPopGraphCanvas()
 {
-    paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth, curveHeight);
+    paper2 = new Raphael(document.getElementById('canvas_container2'), curveWidth+25, curveHeight+30);
     var l = years.length;
 
 
@@ -341,18 +345,23 @@ function drawPopGraphCanvas()
     {
         year = years[i];
         x = (i+1/2)*spacing + curvePadding;
-       var rect =  paper2.rect(x,0,spacing, curveHeight+20);
+       var rect =  paper2.rect(x,0,spacing, curveHeight);
        rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
        $(rect.node).attr("year",year);
        $(rect.node).hover(getHoverHandler(rect));
        $(rect.node).click(getClickHandler(rect));
        $(rect.node).mouseout(getMouseoutHandler(rect));
+
+       var t = paper2.text((i+1)*spacing+10 ,curveHeight+20,year);
+       t.attr({transform: "r" +(45)});
+
     }
 
 
 }
 $(function () {
     $(".countryList").hide();
+    $("#years").hide();
     $('#tabs-'+currentLetter).show();
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,
