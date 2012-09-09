@@ -13,7 +13,7 @@ var canvas_size = 450,
     countriesHumanNames,
     ageLabels,
     currentCountryData,
-
+    pyramidClickZones,
     cross,
     axes;
 
@@ -73,14 +73,16 @@ function drawPyramidCanvas() {
     female_rect.attr({'fill':'#D156BF', 'fill-opacity':'1'});//#d85898
     var l = ageLabels.length;
     var h_increment = canvas_size / (l + 1);
+    pyramidClickZones = paper.set();
+
     for (i = 0; i < l; i++) {
         var height = Math.round((i + 1) * h_increment);
-        line = paper.path("M 0 " + height + "H  " + canvas_size);
+        var line = paper.path("M 0 " + height + "H  " + canvas_size);
         line.attr({stroke:'#fff', 'stroke-width':1});
         text = paper.text(15, height - 7, ageLabels[l - 1 - i]);
         text.attr({fill:'#fff'});
 
-        var rect = paper.rect(0,height-h_increment,canvas_size,h_increment);
+        var rect = paper.rect(0,height-h_increment+h_increment/2,canvas_size,h_increment);
 
         rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
         $(rect.node).attr("index",l-i-1);
@@ -89,6 +91,7 @@ function drawPyramidCanvas() {
             if (pyramidLabelSet)
                 pyramidLabelSet.remove();
         });
+        pyramidClickZones.push(rect);
     }
     var v_increment = canvas_size / 8;
     for (i = 1; i < 4; i++) {
@@ -137,6 +140,23 @@ function changePyramidInfo()
     changeUrl();
 }
 
+function drawPyramidLabel(x,y,arrowPointingLeft)
+{
+
+    var path = [];
+    var m = arrowPointingLeft? 1:-1;
+    path = path.concat(["M ", x+m*5,y-10, "H", x+m*40 ]);
+    path = path.concat(["Q ", x+m*43,y-10,x+m*43,y-7 ]);
+    path = path.concat(["V ", y+7,"Q",x+m*43,y+10,x+m*40,y+10 ]);
+    path = path.concat(["H ", x+m*5, "Q",x+m*3,y+10,x+m*3,y+7  ]);
+    path = path.concat(["V ", y+3,"L",x,y,"L",x+m*3,y-3   ]);
+    path = path.concat(["V ", y-7, "Q",x+m*3, y-10,x+m*5,y-10   ]);
+    var label= paper.path(path);
+    label.attr({stroke:"#07669d", fill:"#fff"});
+    return label;
+}
+
+
 function getHoverHandlerPyramid(rect)
 {
     return function(event)
@@ -157,14 +177,16 @@ function getHoverHandlerPyramid(rect)
                   var x_male = Math.round(canvas_size / 2 + male_value * canvas_size * multiplier);
                   var y_male = Math.round((21 - i) * h_increment);
 
-                  var rf = paper.rect(x_female-41, y_female-10,40,20);
-                  rf.attr({stroke:"#07669d", fill:"#fff"});
-                  var textf = paper.text(x_female-21, y_female,(female_value*100).toFixed(1)+ "%");
+                  var rf =drawPyramidLabel(x_female-2,y_female,false);
+                  var textf = paper.text(x_female-24, y_female,(female_value*100).toFixed(1)+ "%");
                   textf.attr({font: '10px Helvetica, Arial', fill: "#07669d"});
 
-                  var rm = paper.rect(x_male, y_male-10,40,20);
+                  var cf = paper.circle(x_female,y_female,2);
+                  cf.attr({ fill: "#fff",stroke:"#fff"});
+
+                  var rm = drawPyramidLabel(x_male+2,y_male,true);
                   rm.attr({stroke:"#07669d", fill:"#fff"});
-                  var textm = paper.text(x_male+21, y_male,(male_value*100).toFixed(1)+ "%");
+                  var textm = paper.text(x_male+24, y_male,(male_value*100).toFixed(1)+ "%");
                   textm.attr({font: '10px Helvetica, Arial', fill: "#07669d"});
 
 
@@ -174,11 +196,13 @@ function getHoverHandlerPyramid(rect)
                   pyramidLabelSet= paper.set();
 
                   pyramidLabelSet.push(rf);
+                  pyramidLabelSet.push(cf);
                   pyramidLabelSet.push(textf);
                   pyramidLabelSet.push(rm);
                   pyramidLabelSet.push(textm);
-                  pyramidLabelSet.attr({'opacity':0});
-                  pyramidLabelSet.animate({'opacity':1},100);
+                  pyramidClickZones.toFront();
+                  //pyramidLabelSet.attr({'opacity':0});
+                  //pyramidLabelSet.animate({'opacity':1},300);
           }
 }
 
@@ -192,6 +216,7 @@ function getHoverHandler(rect)
               var year =  $(rect.node).attr("year")
               drawCrossOnPopGraph(year);
              $("#"+year).addClass("temp_selected_link");
+              rect.toFront();
           }
 }
 
@@ -317,7 +342,7 @@ function drawPopGraphCanvas()
         year = years[i];
         x = (i+1/2)*spacing + curvePadding;
        var rect =  paper2.rect(x,0,spacing, curveHeight+20);
-       rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
+       rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
        $(rect.node).attr("year",year);
        $(rect.node).hover(getHoverHandler(rect));
        $(rect.node).click(getClickHandler(rect));
@@ -340,14 +365,15 @@ $(function () {
         drawPopGraphCanvas();
 
 
+
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                   currentCountryData = data;
                   var p1 = generatePath( );
                   c = paper.path(p1);
                   c.attr({stroke:'#fff', 'stroke-width':2, 'stroke-linecap':'round', fill:'#fff', 'fill-opacity':'0.8'});
-
-                  drawCrossOnPopGraph(currentYear);
                   drawPopulationCurve();
+                  pyramidClickZones.toFront();
+                  drawCrossOnPopGraph(currentYear);
                   setLabels();
               });
     });
