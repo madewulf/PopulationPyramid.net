@@ -79,7 +79,7 @@ function drawPyramidCanvas() {
         var height = Math.round((i + 1) * h_increment);
         var line = paper.path("M 0 " + height + "H  " + canvas_size);
         line.attr({stroke:'#fff', 'stroke-width':1});
-        text = paper.text(15, height - 7, ageLabels[l - 1 - i]);
+        var text = paper.text(15, height - 7, ageLabels[l - 1 - i]);
         text.attr({fill:'#fff'});
 
         var rect = paper.rect(0,height-h_increment+h_increment/2,canvas_size,h_increment);
@@ -102,10 +102,10 @@ function drawPyramidCanvas() {
 
         line = paper.path("M " + x2 + " " + canvas_size + "  V" + (canvas_size - 10));
         line.attr({stroke:'#fff', 'stroke-width':1});
-        text = paper.text(x1, canvas_size - 10, (i * 2.5) + "%");
-        text.attr({fill:'#fff',font: '10px Helvetica, Arial',});
+        var text = paper.text(x1, canvas_size - 10, (i * 2.5) + "%");
+        text.attr({fill:'#fff','font': '10px Helvetica, Arial'});
         text = paper.text(x2, canvas_size - 10, (i * 2.5) + "%");
-        text.attr({fill:'#fff',font: '10px Helvetica, Arial',});
+        text.attr({fill:'#fff',font: '10px Helvetica, Arial'});
     }
 }
 
