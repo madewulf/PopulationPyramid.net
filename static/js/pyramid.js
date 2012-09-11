@@ -14,8 +14,12 @@ var canvas_size = 450,
     ageLabels,
     currentCountryData,
     pyramidClickZones,
-    cross,
-    axes;
+    crossSet,
+    axes,
+    previousCountry,
+    previousYear,
+    yearsDict,
+    yearsSet;
 
 /*variables used for the population size graph*/
 var curvePadding;
@@ -60,7 +64,9 @@ function generatePath()
 }
 
 window.onpopstate = function (event) {
-    // alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+    var state = event.state;
+    currentCountry = state.currentCountry;
+    currentYear = state.currentYear;
 };
 
 
@@ -87,6 +93,7 @@ function drawPyramidCanvas() {
         rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
         $(rect.node).attr("index",l-i-1);
         $(rect.node).hover(getHoverHandlerPyramid(rect));
+
         $(rect.node).mouseout(function(event){
             if (pyramidLabelSet)
                 pyramidLabelSet.remove();
@@ -110,35 +117,40 @@ function drawPyramidCanvas() {
 }
 
 
-function setLabels()
+function formatPopSizeString(popSize)
 {
-    $('#currentYear').text(currentYear);
-    currentCountryName = countriesHumanNames[currentCountry];
-    $("#currentCountry").text(currentCountryName);
-    var pop = populations[currentCountry][currentYear]*1000+'';
+    var pop = popSize*1000+'';
     var stringPop="";
     for (var i = 0, l = pop.length; i < l; i++) {
           if ((l - i) % 3 === 0 && i !== 0) {
               stringPop += ".";
           }
         stringPop += pop.charAt(i);
-
       }
-      $('#tot_pop').text(stringPop);
+    return stringPop;
+}
+
+function setTopLabels()
+{
+    $('#currentYear').text(currentYear);
+    currentCountryName = countriesHumanNames[currentCountry];
+    $("#currentCountry").text(currentCountryName);
+    var stringPop = formatPopSizeString(populations[currentCountry][currentYear]);
+    $('#tot_pop').text(stringPop);
 }
 
 function changeUrl() {
     _gaq.push(['_trackEvent', 'country', currentCountry]);
     _gaq.push(['_trackEvent', 'year', currentYear + ""]);
     _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
-    if (history.pushState())
-        history.pushState({"coucou":"coucou"}, "", "/" + currentCountry + "/" + currentYear);
+    if (history.pushState)
+        history.pushState({"currentYear":previousYear,"currentCountry":previousCountry}, "", "/" + currentCountry + "/" + currentYear);
 
 }
 
 function changePyramidInfo()
 {
-    setLabels();
+    setTopLabels();
     changeUrl();
 }
 
@@ -211,44 +223,48 @@ function getHoverHandlerPyramid(rect)
 }
 
 
-
-function getHoverHandler(rect)
+function getHoverHandlerPopGraph(rect)
 {
     return function(event)
           {
              //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
               var year =  $(rect.node).attr("year")
               drawCrossOnPopGraph(year);
-             $("#"+year).addClass("temp_selected_link");
+              yearsDict[year].attr({fill:'#D156BF',fontWeight:'bold'});
               rect.toFront();
           }
 }
 
-function getMouseoutHandler(rect)
+function getMouseoutHandlerPopGraph(rect)
 {
     return function(event)
           {
               drawCrossOnPopGraph(currentYear);
               var year = $(rect.node).attr("year");
-
+              if (year != currentYear)
+                  yearsDict[year].attr({fill:'#07669d',fontWeight:'bold'});
               if (year!=currentYear)
                 $("#"+year).removeClass("temp_selected_link");
           }
 }
 
-function getClickHandler(rect)
+function onYearPicked(year)
+{
+    previousYear = currentYear;
+    currentYear = year;
+    yearsSet.attr({fill:'#07669d'});
+    yearsDict[year].attr({fill:'#D156BF',fontWeight:'bold'});
+    var p2 = generatePath( );
+    c.animate({path:p2}, 1000);
+    changePyramidInfo();
+}
+
+function getClickHandlerPopGraph(rect)
 {
     return function(event)
             {
-                $("#"+currentYear).removeClass("temp_selected_link");
-                currentYear = $(rect.node).attr("year");
-
-                $(".year_link").removeClass("selected_link");
-                $("#"+currentYear).addClass("selected_link");
-                $('#currentYear').text(year);
-                var p2 = generatePath( );
-                c.animate({path:p2}, 1000);
-                changePyramidInfo();
+                var year = $(rect.node).attr("year");
+                onYearPicked(year);
             }
 }
 
@@ -265,10 +281,17 @@ function drawCrossOnPopGraph (year)
        var y = (1- ((currentPopValue) /spanP))*useableHeight +curvePadding/2 ;
        x = index*spacing + curvePadding;
        var crossPath = "M  "+curvePadding + ' '  + y + "H" + (useableWidth + curvePadding) + "M " + x  +" " + curvePadding +  " V" + (useableHeight+curvePadding);
-       if (cross )
-           cross.remove();
-       cross = paper2.path(crossPath);
+       if (crossSet )
+           crossSet.remove();
+       var cross = paper2.path(crossPath);
        cross.attr({stroke:'#07669d', 'stroke-width':1,'stroke-opacity':'0.2','stroke-dasharray': "-"});
+    var xt = x +35;
+    var yt = y<60?y +10:y-10;
+    var t = paper2.text(452 -30  ,yt,formatPopSizeString(currentPopValue));
+    t.attr({fill:'#07669d','font': '10px Helvetica, Arial'});
+    crossSet = paper2.set();
+    crossSet.push(cross);
+    crossSet.push(t);
 }
 
 function drawPopulationCurve()
@@ -338,26 +361,27 @@ function drawPopGraphCanvas()
     axes = paper2.path(axesPath);
     axes.attr({stroke:'#07669d', 'stroke-width':1});
 
-
-
     /*click zones*/
+    yearsDict = {};
+    yearsSet = paper2.set();
     for (var i=0;i<l;i++)
     {
         year = years[i];
         x = (i+1/2)*spacing + curvePadding;
-       var rect =  paper2.rect(x,0,spacing, curveHeight);
+       var rect =  paper2.rect(x,0,spacing, curveHeight+25);
        rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
        $(rect.node).attr("year",year);
-       $(rect.node).hover(getHoverHandler(rect));
-       $(rect.node).click(getClickHandler(rect));
-       $(rect.node).mouseout(getMouseoutHandler(rect));
-
-       var t = paper2.text((i+1)*spacing+10 ,curveHeight+20,year);
+       $(rect.node).hover(getHoverHandlerPopGraph(rect));
+       $(rect.node).click(getClickHandlerPopGraph(rect));
+       $(rect.node).mouseout(getMouseoutHandlerPopGraph(rect));
+        $(rect.node).attr("class","pointer");
+       var t = paper2.text((i+1)*spacing+10 ,curveHeight+13,year);
        t.attr({transform: "r" +(45)});
 
+       yearsDict[year]=t;
+       yearsSet.push(t);
     }
-
-
+    yearsSet.attr({fill:'#07669d','font': '10px Helvetica, Arial'});
 }
 $(function () {
     $(".countryList").hide();
@@ -372,9 +396,6 @@ $(function () {
             ageLabels = mainData.ageLabels;
         drawPyramidCanvas();
         drawPopGraphCanvas();
-
-
-
         $.getJSON("/static/data/generated/" + currentCountry + ".json", function (data) {
                   currentCountryData = data;
                   var p1 = generatePath( );
@@ -383,7 +404,7 @@ $(function () {
                   drawPopulationCurve();
                   pyramidClickZones.toFront();
                   drawCrossOnPopGraph(currentYear);
-                  setLabels();
+                  setTopLabels();
               });
     });
 
@@ -400,6 +421,7 @@ $(function () {
 
     $(".country_link").click(function (event) {
            event.preventDefault();
+           previousCountry = currentCountry;
            currentCountry = $(this).attr("id");
         $(".country_link").removeClass("selected_link");
               $(this).addClass("selected_link");

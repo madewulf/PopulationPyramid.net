@@ -18,8 +18,8 @@
 
     <meta charset="utf-8"/>
     <META name="description"
-          content="Visualization of the population pyramids of the world, based on the United Nations data."/>
-    <META name="keywords" content="Population, Pyramid, Demographics, Visualization"/>
+          content="Visualization of the population pyramids of the world, based on the United Nations data. {{currentCountryName}} -{{currentYear}} "/>
+    <META name="keywords" content="{{currentCountryName}},{{currentYear}}, Population, Pyramid, Demographics, Visualization"/>
 
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400italic|Prata' rel='stylesheet' type='text/css'>
@@ -40,7 +40,6 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
-
     </script>
     <script type="text/javascript">
         var currentCountry = "{{currentCountry }}";
@@ -56,7 +55,7 @@
     padding: 5px 0 5px 0; border-bottom:solid #D156BF 1px;">
 
     <div style="width:960px; margin:auto;">
-        <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2100: </h1>
+        <h1 style="padding:0 0 0 0px;text-shadow: 0px -1px 0 #3796CA;width:400px;">Population Pyramids of the World from 1950 to 2100</h1>
         <!--<div style="float:right; margin-top:-19px;"><g:plusone size="medium" annotation="inline" width="120" href="http://populationpyramid.net"></g:plusone>
         </div>-->
         <div style="float:right; margin-top:-19px;"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpopulationpyramid.net&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=20&amp;appId=205567582820738" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe></div>
@@ -88,7 +87,7 @@
             <div id="canvas_container"></div>
         </div>
         <div id="right_content_div">
-        <h3>Pick a Year:</h3>
+        <h3>Click on a Year:</h3>
         <div id="curve_div">
             <div id="canvas_container2"></div>
         </div>
@@ -99,7 +98,7 @@
                 </div>
                 {%endfor%}
         </div>
-        <h3>Pick a Country:</h3>
+        <h3 id="clickOnACountry">Click on a Country:</h3>
 
         <div id="countriesTabs" style="clear:both;">
             <ul>
@@ -119,16 +118,8 @@
             </div>
             {%endfor%}
         </div>
-
-
-
         </div> <!-- closing right content div-->
     </div>
-    <!--<div id="link">
-        <div id="url_div">
-            Link: <a href="" id="page_url"><span id="url"></span></a>
-        </div>
-    </div>-->
     <div id="footer">
         <p>
            Visualization by <a href="http://multitasked.net">Martin De Wulf</a> (<a href="http://twitter.com/madewulf">@madewulf</a>) &mdash;
