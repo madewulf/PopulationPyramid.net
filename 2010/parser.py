@@ -21,7 +21,7 @@ files = {
 f = lambda: defaultdict(f)
 res_dict = defaultdict(f)
 year_set = set()
-print u"qmsdlkjqmslkjfçççç"
+
 countries_dict = {}
 count =0
 for sex in files:
