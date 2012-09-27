@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, request
 from flask import render_template, make_response
 import pickle
 import logging, sys
@@ -10,7 +10,9 @@ app = Flask(__name__)
 @app.route('/<country>/<int:year>/')
 @app.route('/<country>/<int:year>/<currentLetter>/')
 def pyramid(country="WORLD",year="2010",currentLetter=None):
+
     app.logger.error('request received %s %s',country, year)
+
     years = range(1950,2101,5)
     alphabet = map(chr, range(65, 91))
     f = open('2010/letters_to_countries_list_dict.pickle')
@@ -58,5 +60,9 @@ if __name__ == '__main__':
 
         # Bind to PORT if defined, otherwise default to 5000.
         port = int(os.environ.get('PORT', 5000))
+<<<<<<< HEAD
         app.debug = True
         app.run(host='0.0.0.0', port=port)
+=======
+        app.run(host='0.0.0.0', port=port, debug=True)
+>>>>>>> 3727bb3f98af3c33b4d332c29465e50c5641526f
