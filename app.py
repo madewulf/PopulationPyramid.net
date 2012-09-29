@@ -2,28 +2,30 @@ from flask import Flask, url_for, request
 from flask import render_template, make_response
 import pickle
 import logging, sys
+import os
 logging.basicConfig(stream=sys.stderr)
 
 app = Flask(__name__)
-
+directory =  os.path.dirname(os.path.abspath( __file__ ))
+app.logger.error(directory)
 @app.route('/')
 @app.route('/<country>/<int:year>/')
 @app.route('/<country>/<int:year>/<currentLetter>/')
 def pyramid(country="WORLD",year="2010",currentLetter=None):
 
-    app.logger.error('request received %s %s',country, year)
+    app.logger.debug('request received %s %s',country, year)
 
     years = range(1950,2101,5)
     alphabet = map(chr, range(65, 91))
-    f = open('2010/letters_to_countries_list_dict.pickle')
+    f = open("%s/%s"%(directory,'2010/letters_to_countries_list_dict.pickle'))
     letters_to_countries_list_dict = pickle.load(f)
 
     f.close()
-    f = open('2010/countries_dict.pickle')
+    f = open("%s/%s"%(directory,'2010/countries_dict.pickle'))
     countries_dict = pickle.load(f)
     f.close()
     currentCountryName = countries_dict.get(country,None)
-    app.logger.error('files read')
+    app.logger.debug('files read')
 
     if currentCountryName is None:
         return make_response(render_template('404.html'), 404)
@@ -41,10 +43,13 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
                 country_tuples.append((c,unicode(countries_dict[c])))
             big_tuple = (letter,country_tuples)
             countries_lists.append(big_tuple)
+        current_url =  "http://populationpyramid.net/%s/%s"%(country,year)
+
         return  render_template("index.html",
                             currentCountry=country,
                             currentCountryName=currentCountryName,
                             currentYear=year,
+                            currentURL = current_url,
                             currentLetter = currentLetter,
                             years = years,
                             alphabet = alphabet,
@@ -60,9 +65,6 @@ if __name__ == '__main__':
 
         # Bind to PORT if defined, otherwise default to 5000.
         port = int(os.environ.get('PORT', 5000))
-<<<<<<< HEAD
         app.debug = True
-        app.run(host='0.0.0.0', port=port)
-=======
         app.run(host='0.0.0.0', port=port, debug=True)
->>>>>>> 3727bb3f98af3c33b4d332c29465e50c5641526f
+

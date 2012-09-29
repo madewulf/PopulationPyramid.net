@@ -1,4 +1,6 @@
-<html itemscope itemtype="http://schema.org/">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd" itemscope itemtype="http://schema.org/">
 <head>
     <title>{{currentCountryName}} - {{currentYear}} - Population Pyramid</title>
     <!-- facebook open graphs tags-->
@@ -65,29 +67,35 @@
 </div>
 <div id="container">
 
-    <div style="width:960px; padding: 10px 0 72px 0;">
+    <div style="width:960px; padding: 10px 0 0px 0;">
         <h2>
             <span id="currentCountry">{{currentCountryName}}</span>
         </h2>
 
         <div style="width:450px;">
-            <h2 style="float:left; ">
-                <span id="currentYear">{{currentYear}}</span>
-            </h2>
-
-            <h2 style="float:right;padding-bottom:0px;">
+            <h2 style="float:right">
                 <span id="pop_span">Population:</span>
                 <span id="tot_pop"></span>
             </h2>
+            <h2 >
+                <span id="currentYear">{{currentYear}}</span>
+            </h2>
+
+
         </div>
     </div>
 
     <div id="content" style="clear:both;    ">
-        <div id="canvas_container_div">
-            <div id="canvas_container"></div>
-        </div>
+        
         <div id="right_content_div">
-        <h3>Click on a Year:</h3>
+	<div id="clickAYearDiv">
+        <h3 style="display:inline;">Click on a Year:</h3>
+	<select id="yearSelect">
+	  {% for year in years %}
+	  <option value="{{year}}" {%if year==currentYear %}selected="selected"{%endif%}>{{year}}</option>
+	  {%endfor %}
+	</select>
+	</div>
         <div id="curve_div">
             <div id="canvas_container2"></div>
         </div>
@@ -119,6 +127,12 @@
             {%endfor%}
         </div>
         </div> <!-- closing right content div-->
+	<div id="canvas_container_div">
+          <div id="canvas_container"></div>
+        </div>
+	<div>
+	    Link to this graph: <span id="urlSpan"><a href="{{currentURL}}">{{currentURL}}</a></span>
+	</div>
     </div>
     <div id="footer">
         <p>

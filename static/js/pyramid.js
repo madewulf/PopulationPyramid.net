@@ -90,7 +90,7 @@ function drawPyramidCanvas() {
 
         var rect = paper.rect(0,height-h_increment+h_increment/2,canvas_size,h_increment);
 
-        rect.attr({fill:'#fff', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
+        rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
         $(rect.node).attr("index",l-i-1);
         $(rect.node).hover(getHoverHandlerPyramid(rect));
 
@@ -143,9 +143,12 @@ function changeUrl() {
     _gaq.push(['_trackEvent', 'country', currentCountry]);
     _gaq.push(['_trackEvent', 'year', currentYear + ""]);
     _gaq.push(['_trackEvent', 'country-year', currentCountry + "-" + currentYear]);
+    var currentUrl = "http://populationpyramid.net/"+currentCountry+"/"+currentYear+"/";
+    $("#urlSpan").html("<a href='"+currentUrl+"'>"+currentUrl+"</a>");
+
+    
     if (history.pushState)
         history.pushState({"currentYear":previousYear,"currentCountry":previousCountry}, "", "/" + currentCountry + "/" + currentYear);
-
 }
 
 function changePyramidInfo()
@@ -168,7 +171,6 @@ function drawPyramidLabel(x,y,arrowPointingLeft)
     label.attr({stroke:"#07669d", fill:"#fff"});
     return label;
 }
-
 
 function getHoverHandlerPyramid(rect)
 {
@@ -209,7 +211,6 @@ function getHoverHandlerPyramid(rect)
                   if (pyramidLabelSet)
                       pyramidLabelSet.remove();
                   pyramidLabelSet= paper.set();
-
                   pyramidLabelSet.push(rf);
                   pyramidLabelSet.push(cf);
                   pyramidLabelSet.push(textf);
@@ -227,7 +228,6 @@ function getHoverHandlerPopGraph(rect)
 {
     return function(event)
           {
-             //rect.animate({"fill":"#07669d",'fill-opacity':'0.8'},333);
               var year =  $(rect.node).attr("year")
               drawCrossOnPopGraph(year);
               yearsDict[year].attr({fill:'#D156BF',fontWeight:'bold'});
@@ -255,6 +255,7 @@ function onYearPicked(year)
     yearsSet.attr({fill:'#07669d'});
     yearsDict[year].attr({fill:'#D156BF',fontWeight:'bold'});
     var p2 = generatePath( );
+    $("#yearSelect").val(year);
     c.animate({path:p2}, 1000);
     changePyramidInfo();
 }
@@ -369,7 +370,9 @@ function drawPopGraphCanvas()
         year = years[i];
         x = (i+1/2)*spacing + curvePadding;
        var rect =  paper2.rect(x,0,spacing, curveHeight+25);
-       rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff','stroke-opacity':'0.0'})
+       
+       rect.attr({fill:'#f0f', 'fill-opacity':'0.0',stroke:'#fff',fill:"#f00",'stroke-opacity':'0.0'})
+
        $(rect.node).attr("year",year);
        $(rect.node).hover(getHoverHandlerPopGraph(rect));
        $(rect.node).click(getClickHandlerPopGraph(rect));
@@ -383,9 +386,15 @@ function drawPopGraphCanvas()
     }
     yearsSet.attr({fill:'#07669d','font': '10px Helvetica, Arial'});
 }
+
 $(function () {
     $(".countryList").hide();
     $("#years").hide();
+    $("#yearSelect").change(function(){
+	var year = $(this).val();
+        onYearPicked(year);
+        drawCrossOnPopGraph(year);
+    });
     $('#tabs-'+currentLetter).show();
     $.getJSON("/static/data/mainData.json", function (mainData) {
         alphabet = mainData.alphabet,

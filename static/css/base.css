@@ -99,7 +99,7 @@ a:active {color:#D156BF;}  /* selected link */
 
 #canvas_container_div
 {
-    float:left;
+
     width:450px;
 }
 
@@ -190,7 +190,7 @@ a.temp_selected_link
 
 #right_content_div
 {
-    float:left;
+    float:right;
     width:490px;
     margin-left:20px;
 }
@@ -202,8 +202,13 @@ a.temp_selected_link
     margin-top:-15px;
     float:left;
     padding-bottom:10px;
+    display:none;
 }
 
+#clickAYearDiv
+{
+    margin-bottom:10px;
+}
 #countriesTabs
 {
     margin-top:10px;
