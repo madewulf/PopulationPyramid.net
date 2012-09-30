@@ -40,7 +40,7 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
             country_list = letters_to_countries_list_dict[letter.upper()]
             country_tuples = []
             for c in country_list:
-                country_tuples.append((c,unicode(countries_dict[c])))
+                country_tuples.append((c,countries_dict[c]))
             big_tuple = (letter,country_tuples)
             countries_lists.append(big_tuple)
         current_url =  "http://populationpyramid.net/%s/%s"%(country,year)

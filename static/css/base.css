@@ -84,8 +84,6 @@ a:active {color:#D156BF;}  /* selected link */
 
 #canvas_container2 {
     width: 480px;
-    padding-bottom:20px;
-
 }
 
 
@@ -128,9 +126,14 @@ a:active {color:#D156BF;}  /* selected link */
 
 #footer{
     clear: both;
-    padding-top: 70px;
+    margin-top:10px;
+
+    padding-top: 20px;
     padding-bottom: 10px;
     width:960px;
+
+    font-size:0.8em;
+    text-align:center;
 
 }
 
@@ -158,10 +161,7 @@ a.temp_selected_link
 {
     font-size: 15px;
     color: #66A7CC;
-
-    //font-family: georgia, serif;
     text-shadow:none;
-
 }
 
 #footer a
@@ -218,7 +218,10 @@ a.temp_selected_link
 
 h3
 {
-   font-size: 1.2em;
+
+    font-size: 15px;
+    color: #66A7CC;
+    font-family: 'LeagueGothic';
    padding-bottom:10px;
 }
 
@@ -260,7 +263,7 @@ h3
 {
     float:left;
     width:237px;
-    line-height: 1.2em;
+    line-height: 1.4em;
     font-size: 0.8em;
 }
 #clickOnACountry
@@ -272,3 +275,21 @@ h3
 {
     cursor: pointer;
 }
+
+#selectBox
+{
+    float:left;
+}
+
+#urlDiv
+{
+    padding-top:10px;
+}
+
+#clickAYearDiv h3
+{
+    float:left;
+    padding-top:3px;
+    padding-right:10px;
+}
+

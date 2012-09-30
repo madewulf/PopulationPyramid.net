@@ -4,6 +4,7 @@ import urllib
 import json
 from collections import defaultdict
 import pickle
+import re
 
 files = {
     "male":
@@ -33,9 +34,10 @@ for sex in files:
                 year_set.add(year)
                 country = row[2]
 
-                country = unicode(country, "utf-8")
-                encoded_country =  urllib.quote_plus(country.encode('utf-8','ignore'))
-                countries_dict[encoded_country]=country
+                encoded_country =  urllib.quote_plus(re.sub(r'[^A-Za-z\ ]', "",
+                country.decode('ascii','ignore')))
+                print encoded_country
+                countries_dict[encoded_country]=unicode(country,'utf-8')
                 i=0
                 for v in row[6:22]+row[23:]:
 

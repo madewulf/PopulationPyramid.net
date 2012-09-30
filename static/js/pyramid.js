@@ -380,7 +380,7 @@ function drawPopGraphCanvas()
         $(rect.node).attr("class","pointer");
        var t = paper2.text((i+1)*spacing+10 ,curveHeight+13,year);
        t.attr({transform: "r" +(45)});
-
+       t.attr({fill:'#fff','font': '10px Helvetica, Arial'});
        yearsDict[year]=t;
        yearsSet.push(t);
     }
