@@ -64,9 +64,20 @@ function generatePath()
 }
 
 window.onpopstate = function (event) {
-    var state = event.state;
-    currentCountry = state.currentCountry;
-    currentYear = state.currentYear;
+   /* var state = event.state;
+    if (state)
+    {
+        console.log(state);
+        currentCountry = state.currentCountry;
+        currentYear = state.currentYear;
+        yearsDict[currentYear].attr({fill:'#D156BF',fontWeight:'bold'});
+     var p2 = generatePath( );
+     $("#yearSelect").val(year);
+     c.animate({path:p2}, 1000);
+     setTopLabels();
+     drawPopulationCurve();
+     drawCrossOnPopGraph();
+    }*/
 };
 
 
@@ -148,7 +159,13 @@ function changeUrl() {
 
     
     if (history.pushState)
-        history.pushState({"currentYear":previousYear,"currentCountry":previousCountry}, "", "/" + currentCountry + "/" + currentYear);
+        history.pushState(
+            {
+                currentYear:previousYear,
+                currentCountry:previousCountry
+            },
+            "",
+            "/" + currentCountry + "/" + currentYear+"/");
 }
 
 function changePyramidInfo()
@@ -251,6 +268,7 @@ function getMouseoutHandlerPopGraph(rect)
 function onYearPicked(year)
 {
     previousYear = currentYear;
+    previousCountry= currentCountry;
     currentYear = year;
     yearsSet.attr({fill:'#07669d'});
     yearsDict[year].attr({fill:'#D156BF',fontWeight:'bold'});
@@ -390,6 +408,7 @@ function drawPopGraphCanvas()
 $(function () {
     $(".countryList").hide();
     $("#years").hide();
+    $("#yearSelect").val(currentYear);
     $("#yearSelect").change(function(){
 	var year = $(this).val();
         onYearPicked(year);
@@ -431,6 +450,7 @@ $(function () {
     $(".country_link").click(function (event) {
            event.preventDefault();
            previousCountry = currentCountry;
+           previousYear= currentYear;
            currentCountry = $(this).attr("id");
         $(".country_link").removeClass("selected_link");
               $(this).addClass("selected_link");
