@@ -43,7 +43,7 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
                 country_tuples.append((c,countries_dict[c]))
             big_tuple = (letter,country_tuples)
             countries_lists.append(big_tuple)
-        current_url =  "http://populationpyramid.net/%s/%s"%(country,year)
+        current_url =  "http://populationpyramid.net/%s/%s/"%(country,year)
 
         return  render_template("index.html",
                             currentCountry=country,
