@@ -3,20 +3,30 @@ from flask import render_template, make_response
 import pickle
 import logging, sys
 import os
+
+from werkzeug.contrib.cache import MemcachedCache
+cache = MemcachedCache(['127.0.0.1:11211'])
+
 logging.basicConfig(stream=sys.stderr)
 
 app = Flask(__name__)
 directory =  os.path.dirname(os.path.abspath( __file__ ))
 app.logger.error(directory)
+
 @app.route('/')
 @app.route('/<country>/<int:year>/')
 @app.route('/<country>/<int:year>/<currentLetter>/')
 def pyramid(country="WORLD",year="2010",currentLetter=None):
+    cache_key = "%s%s" % (country, year)
+    cached_value = cache.get(cache_key)
+    if cached_value is not None :
+        app.logger.debug("returning cached value")
+        return cached_value
 
     app.logger.debug('request received %s %s',country, year)
 
     years = range(1950,2101,5)
-    alphabet = map(chr, range(65, 91))
+
     f = open("%s/%s"%(directory,'2010/letters_to_countries_list_dict.pickle'))
     letters_to_countries_list_dict = pickle.load(f)
 
@@ -45,7 +55,7 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
             countries_lists.append(big_tuple)
         current_url =  "http://populationpyramid.net/%s/%s/"%(country,year)
 
-        return  render_template("index.html",
+        res=  render_template("index.html",
                             currentCountry=country,
                             currentCountryName=currentCountryName,
                             currentYear=year,
@@ -55,6 +65,10 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
                             alphabet = alphabet,
                             countries_lists = countries_lists
                             )
+        cache.set(cache_key,res)
+        app.logger.debug("setting cached value")
+
+        return res
 
 
 @app.errorhandler(404)
