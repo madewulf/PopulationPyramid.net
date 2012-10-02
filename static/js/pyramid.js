@@ -125,6 +125,12 @@ function drawPyramidCanvas() {
         text = paper.text(x2, canvas_size - 10, (i * 2.5) + "%");
         text.attr({fill:'#fff',font: '10px Helvetica, Arial'});
     }
+
+    var text = paper.text( canvas_size/4, canvas_size/6,"Male");
+    text.attr({fill:'#fff','font': '65px LeagueGothic, Helvetica, Arial'});
+
+    var text = paper.text( canvas_size*3/4, canvas_size/6,"Female");
+    text.attr({fill:'#fff','font': '65px LeagueGothic, Helvetica, Arial'});
 }
 
 
@@ -376,6 +382,13 @@ function drawPopGraphCanvas()
     //with arrow
     axesPath += "M "+  0 + " " + (2*curvePadding +1) + "L" +curvePadding + ' ' + (curvePadding + 1) ;
     axesPath += "M "+  2*curvePadding + " " + (2*curvePadding +1) + "L" + curvePadding+ ' ' + (curvePadding + 1) ;
+
+    /* a label */
+    var t = paper2.text(curvePadding +45  ,curvePadding +5,"Population Size");
+    t.attr({'font': '10px Helvetica, Arial',fill:'#07669d'});
+    /*another label */
+    t = paper2.text(useableWidth-5 ,useableHeight- 5,"Year");
+    t.attr({'font': '10px Helvetica, Arial',fill:'#07669d'});
 
     axes = paper2.path(axesPath);
     axes.attr({stroke:'#07669d', 'stroke-width':1});

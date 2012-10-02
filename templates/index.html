@@ -2,9 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8"/>    
-
+{% if home %}
+    <title>Population Pyramids of the Whole World from 1950 to 2100 &mdash; PopulationPyramid.net</title>
+{% else %}
   <title>Population Pyramid of {{currentCountryName}} in {{currentYear}} &mdash; PopulationPyramid.net</title>
-
+{% endif %}
     <!-- facebook open graphs tags-->
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">   
     <meta property="og:title" content="PopulationPyramid.net"/>
@@ -73,9 +75,7 @@
                     scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;"
                     allowTransparency="true"></iframe>
         </div>
-        <p style="float:right; margin-top:-17px; margin-right:10px; color:#66A7CC; font-size:0.8em;">Soon on iPad as
-            part of the <a href="http://movingworldapp.com" style="color:#66A7CC;text-decoration: underline; ">Moving
-                World App</a></p>
+        <p style="float:right; margin-top:-17px; margin-right:10px; color:#66A7CC; font-size:0.8em;"><a href="http://en.wikipedia.org/wiki/Population_pyramid" style="color:#66A7CC;text-decoration: underline; ">What is a population pyramid?</a></p>
     </div>
 
 </div>

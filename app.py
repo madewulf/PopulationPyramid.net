@@ -4,8 +4,11 @@ import pickle
 import logging, sys
 import os
 
-from werkzeug.contrib.cache import MemcachedCache
-cache = MemcachedCache(['127.0.0.1:11211'])
+#from werkzeug.contrib.cache import MemcachedCache
+#cache = MemcachedCache(['127.0.0.1:11211'])
+
+from werkzeug.contrib.cache import SimpleCache
+cache = SimpleCache()
 
 logging.basicConfig(stream=sys.stderr)
 
@@ -17,7 +20,7 @@ app.logger.error(directory)
 @app.route('/<country>/<int:year>/')
 @app.route('/<country>/<int:year>/<currentLetter>/')
 def pyramid(country="WORLD",year="2010",currentLetter=None):
-    cache_key = "%s%s" % (country, year)
+    cache_key = "%s%s%s" % (country, year, ""+request.path=="/")
     cached_value = cache.get(cache_key)
     if cached_value is not None :
         app.logger.debug("returning cached value")
@@ -63,7 +66,8 @@ def pyramid(country="WORLD",year="2010",currentLetter=None):
                             currentLetter = currentLetter,
                             years = years,
                             alphabet = alphabet,
-                            countries_lists = countries_lists
+                            countries_lists = countries_lists,
+                            home = request.path== '/'
                             )
         cache.set(cache_key,res)
         app.logger.debug("setting cached value")
